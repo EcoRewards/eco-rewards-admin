@@ -1,18 +1,20 @@
 import React from 'react';
 import './App.css';
-import { TopNavigation } from "./TopNavigation/TopNavigation";
-import { Login } from "./Login/Login";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { LoginPage } from "./LoginPage/LoginPage";
+import { AuthenticatedPage } from './AuthenticatedPage/AuthenticatedPage';
 
-export const App: React.FC = () => {
+export const App = () => {
   return (
-    <>
-      <TopNavigation/>
-      <div className="row justify-content-center">
-        <div className="col-4">
-          <h1>Eco Rewards Hub Admin</h1>
-          <Login/>
-        </div>
-      </div>
-    </>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/">
+          <AuthenticatedPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
