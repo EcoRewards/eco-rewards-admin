@@ -23,9 +23,13 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
       history.replace(from);
     }
     else {
-      setLoginError("Unable to login.");
+      setLoginError("Unable to login, please try again.");
     }
   };
+
+  if (auth.isAuthenticated) {
+    history.replace(from);
+  }
 
   return (
     <div className="container">
@@ -40,7 +44,6 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
                     <div className="text-center">
                       <h1 className="h4 text-gray-900 mb-4">Login</h1>
                     </div>
-                    { loginError }
                     <form className="user">
                       <div className="form-group">
                         <input type="email" className="form-control form-control-user" id="exampleInputEmail"
@@ -63,6 +66,8 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
                         Login
                       </button>
                     </form>
+                    { loginError && (<hr />) }
+                    {loginError}
                   </div>
                 </div>
               </div>

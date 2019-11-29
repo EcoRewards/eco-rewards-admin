@@ -4,19 +4,20 @@ import { AxiosInstance } from "axios";
 export class Authentication {
   private cookie: AuthenticationCookie;
   private readonly setCookie: (name: string, value: any) => void;
+  private readonly removeCookie: (name: string) => void;
 
   constructor(
     private readonly api: AxiosInstance
   ) {
-    const [cookie, setCookie] = useCookies(["auth"]);
+    const [cookie, setCookie, removeCookie] = useCookies(["auth"]);
 
     this.cookie = cookie.auth;
     this.setCookie = setCookie;
+    this.removeCookie = removeCookie;
   }
 
   public get isAuthenticated(): boolean {
-    console.log(this.cookie);
-    return this.cookie.token !== undefined;
+    return this.cookie && this.cookie.token !== undefined;
   }
 
   public async login(username: string, password: string): Promise<void> {
@@ -28,6 +29,10 @@ export class Authentication {
     catch (e) {
       console.error(e);
     }
+  }
+
+  public logout(): void {
+    this.removeCookie("auth");
   }
 
 }

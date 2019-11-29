@@ -15,7 +15,7 @@ export const SideNavigation = () => {
       <hr className="sidebar-divider my-0"/>
 
       <li className="nav-item">
-        <Link className="nav-link" to="/login">
+        <Link className="nav-link" to="/">
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></Link>
       </li>
@@ -27,7 +27,7 @@ export const SideNavigation = () => {
       </div>
 
       <li className="nav-item active">
-        <a className="nav-link" href="charts.html">
+        <a className="nav-link" href="/schemes">
           <i className="fas fa-fw fa-folder"></i>
           <span>Schemes</span></a>
       </li>

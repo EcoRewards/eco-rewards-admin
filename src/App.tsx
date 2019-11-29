@@ -19,7 +19,7 @@ export const App = () => {
           <LoginPage auth={auth}/>
         </Route>
         <PrivateRoute auth={auth} path="/">
-          <AuthenticatedPage />
+          <AuthenticatedPage auth={auth}/>
         </PrivateRoute>
       </Switch>
     </Router>

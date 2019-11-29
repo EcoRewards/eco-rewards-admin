@@ -4,16 +4,21 @@ import { DashboardPage } from './DashboardPage/DashboardPage';
 import { SideNavigation } from "./SideNavigation/SideNavigation";
 import { TopBar } from "./TopBar/TopBar";
 import { Footer } from "./Footer/Footer";
+import { Authentication } from "../Authentication";
+import { SchemesPage } from "./SchemesPage/SchemesPage";
 
-export const AuthenticatedPage = () => {
+export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
   return (
     <div id="wrapper">
       <SideNavigation/>
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
-          <TopBar/>
+          <TopBar auth={auth}/>
           <Router>
             <Switch>
+              <Route path="/schemes">
+                <SchemesPage />
+              </Route>
               <Route path="/">
                 <DashboardPage />
               </Route>
@@ -25,3 +30,7 @@ export const AuthenticatedPage = () => {
     </div>
   );
 };
+
+interface AuthenticatedPageProps {
+  auth: Authentication;
+}
