@@ -1,29 +1,57 @@
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import "./LoginPage.css";
+import { Authentication } from "../Authentication";
+import {
+  useHistory,
+  useLocation
+} from "react-router-dom";
 
-export const LoginPage = () => {
+export const LoginPage = ({ auth }: LoginPageProps) => {
+  const history = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
+  const [loginError, setLoginError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async (e: FormEvent) => {
+    e.preventDefault();
+
+    await auth.login(username, password);
+
+    if (auth.isAuthenticated) {
+      history.replace(from);
+    }
+    else {
+      setLoginError("Unable to login.");
+    }
+  };
+
   return (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-xl-10 col-lg-12 col-md-9">
           <div className="card o-hidden border-0 shadow-lg my-5">
             <div className="card-body p-0">
-
               <div className="row">
                 <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
                 <div className="col-lg-6">
                   <div className="p-5">
                     <div className="text-center">
-                      <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                      <h1 className="h4 text-gray-900 mb-4">Login</h1>
                     </div>
+                    { loginError }
                     <form className="user">
                       <div className="form-group">
                         <input type="email" className="form-control form-control-user" id="exampleInputEmail"
-                               aria-describedby="emailHelp" placeholder="Enter Email Address..."/>
+                               aria-describedby="emailHelp" placeholder="Enter Email Address..."
+                               onChange={e => setUsername(e.target.value)}
+                        />
                       </div>
                       <div className="form-group">
                         <input type="password" className="form-control form-control-user" id="exampleInputPassword"
-                               placeholder="Password"/>
+                               placeholder="Password" onChange={e => setPassword(e.target.value)}
+                        />
                       </div>
                       <div className="form-group">
                         <div className="custom-control custom-checkbox small">
@@ -31,34 +59,21 @@ export const LoginPage = () => {
                             <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
                         </div>
                       </div>
-                      <a href="index.html" className="btn btn-primary btn-user btn-block">
+                      <button className="btn btn-primary btn-user btn-block" onClick={login}>
                         Login
-                      </a>
-                      <hr/>
-                        <a href="index.html" className="btn btn-google btn-user btn-block">
-                          <i className="fab fa-google fa-fw"></i> Login with Google
-                        </a>
-                        <a href="index.html" className="btn btn-facebook btn-user btn-block">
-                          <i className="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                        </a>
+                      </button>
                     </form>
-                    <hr/>
-                      <div className="text-center">
-                        <a className="small" href="forgot-password.html">Forgot Password?</a>
-                      </div>
-                      <div className="text-center">
-                        <a className="small" href="register.html">Create an Account!</a>
-                      </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };
+
+interface LoginPageProps {
+  auth: Authentication
+}

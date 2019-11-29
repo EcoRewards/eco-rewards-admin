@@ -4,3 +4,7 @@ body {
     background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
     background-size: cover;
 }
+
+.bg-login-image {
+    background: url("http://www.ecorewards.org.uk/images/logo.png") no-repeat  left 100px top 80px !important;
+}
