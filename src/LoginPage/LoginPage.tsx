@@ -59,7 +59,7 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
                       <div className="form-group">
                         <div className="custom-control custom-checkbox small">
                           <input type="checkbox" className="custom-control-input" id="customCheck"/>
-                            <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
+                            <label className="custom-control-label" defaultChecked={true} htmlFor="customCheck">Remember Me</label>
                         </div>
                       </div>
                       <button className="btn btn-primary btn-user btn-block" onClick={login}>
