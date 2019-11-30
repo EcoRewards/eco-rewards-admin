@@ -27,9 +27,9 @@ export const SideNavigation = () => {
       </div>
 
       <li className="nav-item active">
-        <a className="nav-link" href="/schemes">
+        <Link className="nav-link" to="/schemes">
           <i className="fas fa-fw fa-folder"></i>
-          <span>Schemes</span></a>
+          <span>Schemes</span></Link>
       </li>
 
       <li className="nav-item">
