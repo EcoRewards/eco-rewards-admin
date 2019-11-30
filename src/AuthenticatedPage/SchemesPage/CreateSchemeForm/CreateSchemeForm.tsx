@@ -37,7 +37,7 @@ export const CreateSchemeForm = ({ api, addScheme }: CreateSchemeFormProps) => {
             </thead>
             <tbody>
             <tr>
-              <td><input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/></td>
+              <td><input type="text" name="name" value={name} onChange={e => setName(e.target.value)} className="col-12"/></td>
             </tr>
             </tbody>
           </table>
