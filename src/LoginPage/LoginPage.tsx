@@ -13,6 +13,7 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
   const [loginError, setLoginError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
@@ -58,8 +59,8 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
                       </div>
                       <div className="form-group">
                         <div className="custom-control custom-checkbox small">
-                          <input type="checkbox" className="custom-control-input" id="customCheck"/>
-                            <label className="custom-control-label" defaultChecked={true} htmlFor="customCheck">Remember Me</label>
+                          <input type="checkbox" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="custom-control-input" id="customCheck"/>
+                            <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
                         </div>
                       </div>
                       <button className="btn btn-primary btn-user btn-block" onClick={login}>

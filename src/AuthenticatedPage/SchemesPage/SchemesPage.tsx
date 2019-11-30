@@ -1,42 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { AxiosInstance } from "axios";
+import { CreateSchemeForm } from "./CreateSchemeForm/CreateSchemeForm";
+import { SchemesTable } from "./SchemesTable/SchemesTable";
+import { HttpResponse, SchemeJsonView } from "eco-rewards-hub";
 
-export const SchemesPage: React.FC = () => {
+export const SchemesPage = ({api}: SchemesPageProps) => {
+  const [schemes, setSchemes] = useState();
+  const [links, setLinks] = useState({});
+
+  useEffect(() => {
+    async function fetchSchemes() {
+      const response = await api.get("/schemes");
+
+      setSchemes(response.data.data);
+      setLinks(response.data.links);
+    }
+
+    if (!schemes) {
+      fetchSchemes();
+    }
+  }, [api, schemes]);
+
+  const addScheme = (response: HttpResponse<SchemeJsonView>) => {
+    schemes.push(response.data);
+    setSchemes(schemes);
+    setLinks({ ...response.links, ...links});
+  };
+
   return (
     <div className="container-fluid">
-
       <h1 className="h3 mb-2 text-gray-800">Schemes</h1>
-      <p className="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more
-        information about DataTables, please visit the <a rel="noopener noreferrer" target="_blank" href="https://datatables.net">official
-          DataTables documentation</a>.
-      </p>
-
-      <div className="card shadow mb-4">
-        <div className="card-header py-3">
-          <h6 className="m-0 font-weight-bold text-primary">DataTables Example</h6>
-        </div>
-        <div className="card-body">
-          <div className="table-responsive">
-            <table className="table table-bordered" id="dataTable">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-              </tr>
-              <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <p className="mb-4">Create and manage schemes.</p>
+      <CreateSchemeForm api={api} addScheme={addScheme}/>
+      <SchemesTable api={api} schemes={schemes || []}/>
     </div>
   );
 };
+
+interface SchemesPageProps {
+  api: AxiosInstance
+}

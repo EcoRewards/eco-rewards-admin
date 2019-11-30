@@ -17,7 +17,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
           <Router>
             <Switch>
               <Route path="/schemes">
-                <SchemesPage />
+                <SchemesPage api={auth.getAuthenticatedApi()} />
               </Route>
               <Route path="/">
                 <DashboardPage />

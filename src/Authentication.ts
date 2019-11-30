@@ -1,10 +1,11 @@
 import { useCookies } from "react-cookie";
-import { AxiosInstance } from "axios";
+import Axios, { AxiosInstance } from "axios";
 
 export class Authentication {
-  private cookie: AuthenticationCookie;
+  private readonly cookie: AuthenticationCookie;
   private readonly setCookie: (name: string, value: any) => void;
   private readonly removeCookie: (name: string) => void;
+  private readonly authenticatedApi: AxiosInstance;
 
   constructor(
     private readonly api: AxiosInstance
@@ -14,6 +15,12 @@ export class Authentication {
     this.cookie = cookie.auth;
     this.setCookie = setCookie;
     this.removeCookie = removeCookie;
+    this.authenticatedApi = Axios.create({
+      baseURL: api.defaults.baseURL,
+      headers: {
+        authorization: "Basic " + (this.cookie && this.cookie.token)
+      }
+    });
   }
 
   public get isAuthenticated(): boolean {
@@ -35,6 +42,9 @@ export class Authentication {
     this.removeCookie("auth");
   }
 
+  public getAuthenticatedApi() {
+    return this.authenticatedApi;
+  }
 }
 
 interface AuthenticationCookie {
