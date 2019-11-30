@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { DashboardPage } from './DashboardPage/DashboardPage';
 import { SideNavigation } from "./SideNavigation/SideNavigation";
 import { TopBar } from "./TopBar/TopBar";
@@ -14,7 +14,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <TopBar auth={auth}/>
-          <Router>
+          <HashRouter>
             <Switch>
               <Route path="/schemes">
                 <SchemesPage api={auth.getAuthenticatedApi()} />
@@ -23,7 +23,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
                 <DashboardPage />
               </Route>
             </Switch>
-          </Router>
+          </HashRouter>
         </div>
         <Footer/>
       </div>

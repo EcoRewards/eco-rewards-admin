@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { LoginPage } from "./LoginPage/LoginPage";
 import { AuthenticatedPage } from './AuthenticatedPage/AuthenticatedPage';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
@@ -13,7 +13,7 @@ export const App = () => {
   }));
 
   return (
-    <Router>
+    <HashRouter>
       <Switch>
         <Route path="/login">
           <LoginPage auth={auth}/>
@@ -22,7 +22,7 @@ export const App = () => {
           <AuthenticatedPage auth={auth}/>
         </PrivateRoute>
       </Switch>
-    </Router>
+    </HashRouter>
   );
 };
 
