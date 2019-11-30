@@ -17,7 +17,7 @@ export const SchemesTable = ({ api, schemes}: SchemesTableProps) => {
   const filteredItems = rows.filter(item => item.name && item.name.includes(filterText));
   const subHeaderComponentMemo = useMemo(() => {
     return <FilterComponent onFilter={(e: any) => setFilterText(e.target.value)} filterText={filterText} />;
-  }, [filterText, resetPaginationToggle]);
+  }, [filterText]);
 
   return (
     <div className="card shadow mb-4">
