@@ -6,6 +6,7 @@ import { TopBar } from "./TopBar/TopBar";
 import { Footer } from "./Footer/Footer";
 import { Authentication } from "../Authentication";
 import { SchemesPage } from "./SchemesPage/SchemesPage";
+import { OrganisationsPage } from "./OrganisationsPage/OrganisationsPage";
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
   return (
@@ -18,6 +19,9 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
             <Switch>
               <Route path="/schemes">
                 <SchemesPage api={auth.getAuthenticatedApi()} />
+              </Route>
+              <Route path="/organisations">
+                <OrganisationsPage api={auth.getAuthenticatedApi()} />
               </Route>
               <Route path="/">
                 <DashboardPage />

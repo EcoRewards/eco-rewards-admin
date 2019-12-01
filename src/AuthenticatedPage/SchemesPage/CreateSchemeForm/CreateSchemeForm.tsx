@@ -24,7 +24,7 @@ export const CreateSchemeForm = ({ api, addScheme }: CreateSchemeFormProps) => {
   return (
     <div className="card shadow mb-4">
       <div className="card-header py-3">
-        <h6 className="m-0 font-weight-bold text-primary">Create New Scheme</h6>
+        <h6 className="m-0 font-weight-bold text-primary">Create</h6>
       </div>
       <div className="card-body">
         <form className="table-responsive col-2" onSubmit={onSubmit}>

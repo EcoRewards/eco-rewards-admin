@@ -1,23 +1,23 @@
 import React from 'react';
 import "./SideNavigation.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const SideNavigation = () => {
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <NavLink className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-leaf"></i>
         </div>
         <div className="sidebar-brand-text mx-3">Eco Rewards Hub Admin</div>
-      </a>
+      </NavLink>
 
       <hr className="sidebar-divider my-0"/>
 
       <li className="nav-item">
-        <Link className="nav-link" to="/">
+        <NavLink exact={true} activeClassName="active" className="nav-link" to="/">
           <i className="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></Link>
+          <span>Dashboard</span></NavLink>
       </li>
 
       <hr className="sidebar-divider"/>
@@ -26,28 +26,30 @@ export const SideNavigation = () => {
         Manage
       </div>
 
-      <li className="nav-item active">
-        <Link className="nav-link" to="/schemes">
-          <i className="fas fa-fw fa-folder"></i>
-          <span>Schemes</span></Link>
+      <li className="nav-item">
+        <NavLink activeClassName="active" className="nav-link" to="/schemes">
+          <i className="fas fa-fw fa-city"></i>
+          <span>Schemes</span></NavLink>
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="charts.html">
-          <i className="fas fa-fw fa-chart-area"></i>
-          <span>Organisations</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/organisations">
+          <i className="fas fa-fw fa-school"></i>
+          <span>Organisations</span>
+        </NavLink>
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="charts.html">
-          <i className="fas fa-fw fa-chart-area"></i>
-          <span>Groups</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/groups">
+          <i className="fas fa-fw fa-users"></i>
+          <span>Groups</span>
+        </NavLink>
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="charts.html">
-          <i className="fas fa-fw fa-chart-area"></i>
-          <span>Members</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/members">
+          <i className="fas fa-fw fa-user"></i>
+          <span>Members</span></NavLink>
       </li>
 
       <hr className="sidebar-divider"/>
@@ -57,9 +59,9 @@ export const SideNavigation = () => {
       </div>
 
       <li className="nav-item">
-        <a className="nav-link" href="tables.html">
-          <i className="fas fa-fw fa-table"></i>
-          <span>Journeys</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/journeys">
+          <i className="fas fa-fw fa-bus"></i>
+          <span>Journeys</span></NavLink>
       </li>
 
     </ul>
