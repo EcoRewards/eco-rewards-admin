@@ -1,18 +1,15 @@
 import React from "react";
 import { toSchemeId } from "eco-rewards-hub/dist/src/scheme/Scheme";
-import { Table } from "../../Table/Table";
+import { Row, Table } from "../../Table/Table";
 import { AxiosInstance } from "axios";
 import { SchemeJsonView } from "eco-rewards-hub";
 
-export const SchemesTable = ({ api, schemes}: SchemesTableProps) => {
-  const rows = schemes.map(s => ({
-    id: toSchemeId(s.id!),
-    name: s.name
-  }));
+export const SchemesTable = ({ api, schemes, removeSchemes }: SchemesTableProps) => {
+  const rows = schemes.map(s => ({ numeric_id: toSchemeId(s.id!), ...s }));
 
   const columns = [{
     name: "ID",
-    selector: "id",
+    selector: "numeric_id",
     sortable: true,
     width: "100px"
   },{
@@ -22,11 +19,12 @@ export const SchemesTable = ({ api, schemes}: SchemesTableProps) => {
   }];
 
   return (
-    <Table columns={columns} rows={rows}/>
+    <Table columns={columns} rows={rows} removeRows={removeSchemes} api={api}/>
   );
 };
 
 interface SchemesTableProps {
   api: AxiosInstance,
-  schemes: SchemeJsonView[]
+  schemes: (SchemeJsonView & { id: string })[],
+  removeSchemes: (schemes: Row[]) => any
 }

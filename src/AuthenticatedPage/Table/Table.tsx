@@ -1,11 +1,34 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import styled from "styled-components";
 import "./Table.css";
+import { AxiosInstance } from "axios";
 
-export const Table = <T extends Row>({ rows, columns }: TableProps<T>) => {
-  const [filterText, setFilterText] = React.useState('');
-  const [resetPaginationToggle] = React.useState(false);
+export const Table = <T extends Row>({ rows, columns, removeRows, api }: TableProps<T>) => {
+  const [selectedRows, setSelectedRows] = useState([] as Row[]);
+  const [toggleCleared, setToggleCleared] = useState(false);
+
+  const handleRowSelected = useCallback(state => {
+    setSelectedRows(state.selectedRows);
+  }, []);
+
+  const contextActions = useMemo(() => {
+    const handleDelete = async () => {
+
+      if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
+        setToggleCleared(!toggleCleared);
+
+        await Promise.all(selectedRows.map(r => api.delete(r.id)));
+
+        removeRows(selectedRows);
+      }
+    };
+
+    return <button className="btn btn-danger" key="delete" onClick={handleDelete}>Delete</button>;
+  }, [selectedRows, toggleCleared, api, removeRows]);
+
+  const [filterText, setFilterText] = useState('');
+  const [resetPaginationToggle] = useState(false);
   const filteredItems = rows.filter(item => item.name && item.name.includes(filterText));
   const subHeaderComponentMemo = useMemo(() => {
     return <FilterComponent onFilter={(e: any) => setFilterText(e.target.value)} filterText={filterText} />;
@@ -25,6 +48,10 @@ export const Table = <T extends Row>({ rows, columns }: TableProps<T>) => {
             paginationResetDefaultPage={resetPaginationToggle}
             subHeader
             subHeaderComponent={subHeaderComponentMemo}
+            selectableRows
+            contextActions={contextActions}
+            onSelectedRowsChange={handleRowSelected}
+            clearSelectedRows={toggleCleared}
           />
         </div>
       </div>
@@ -34,10 +61,13 @@ export const Table = <T extends Row>({ rows, columns }: TableProps<T>) => {
 
 interface TableProps<T extends Row> {
   rows: T[],
-  columns: IDataTableColumn<T>[]
+  columns: IDataTableColumn<T>[],
+  removeRows(rows: Row[]): any,
+  api: AxiosInstance
 }
 
-interface Row {
+export interface Row {
+  id: string,
   name: string
 }
 

@@ -1,3 +1,7 @@
 .rdt_TableHeader {
-    display: none !important;
+    min-height: 0px !important;
+}
+
+.sc-cSHVUG {
+    height: 50px;
 }

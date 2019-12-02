@@ -3,6 +3,7 @@ import { AxiosInstance } from "axios";
 import { CreateOrganisationForm } from "./CreateOrganisationForm/CreateOrganisationForm";
 import { OrganisationsTable } from "./OrganisationsTable/OrganisationsTable";
 import { HttpResponse, OrganisationJsonView } from "eco-rewards-hub";
+import { Row } from "../Table/Table";
 
 export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
   const [apiData, setApiData] = useState();
@@ -28,6 +29,11 @@ export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
     setApiData({ ...apiData });
   };
 
+  const removeOrganisations = (removed: Row[]) => {
+    apiData.organisations.data = apiData.organisations.data.filter((r1: Row) => !removed.some(r2 => r1.id === r2.id));
+    setApiData({ ...apiData });
+  };
+
   return (
     <div className="container-fluid">
       <h1 className="h3 mb-2 text-gray-800">Organisations</h1>
@@ -38,6 +44,7 @@ export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
         schemes={apiData ? apiData.schemes.data : []}/>
       <OrganisationsTable
         api={api}
+        removeOrganisations={removeOrganisations}
         organisations={apiData ? apiData.organisations.data : []}
         links={apiData ? apiData.organisations.links : {}}/>
     </div>

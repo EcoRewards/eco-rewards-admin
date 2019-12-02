@@ -1,19 +1,20 @@
 import React from "react";
 import { toOrganisationId } from "eco-rewards-hub/dist/src/organisation/Organisation";
-import { Table } from "../../Table/Table";
+import { Row, Table } from "../../Table/Table";
 import { AxiosInstance } from "axios";
 import { OrganisationJsonView } from "eco-rewards-hub";
 
-export const OrganisationsTable = ({ api, organisations, links }: OrganisationsTableProps) => {
+export const OrganisationsTable = ({ api, organisations, links, removeOrganisations }: OrganisationsTableProps) => {
   const rows = organisations.map(o => ({
-    id: toOrganisationId(o.id!),
+    id: o.id!,
+    numeric_id: toOrganisationId(o.id!),
     name: o.name,
     scheme: links[o.scheme].name
   }));
 
   const columns = [{
     name: "ID",
-    selector: "id",
+    selector: "numeric_id",
     sortable: true,
     width: "100px"
   },{
@@ -27,12 +28,13 @@ export const OrganisationsTable = ({ api, organisations, links }: OrganisationsT
   }];
 
   return (
-    <Table columns={columns} rows={rows}/>
+    <Table columns={columns} rows={rows} api={api} removeRows={removeOrganisations}/>
   );
 };
 
 interface OrganisationsTableProps {
   api: AxiosInstance,
   organisations: OrganisationJsonView[],
-  links: Record<string, any>
+  links: Record<string, any>,
+  removeOrganisations: (organisations: Row[]) => any
 }
