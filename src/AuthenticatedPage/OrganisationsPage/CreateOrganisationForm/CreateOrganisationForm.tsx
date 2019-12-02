@@ -28,7 +28,7 @@ export const CreateOrganisationForm = ({ api, addOrganisation, schemes }: Create
         <h6 className="m-0 font-weight-bold text-primary">Create</h6>
       </div>
       <div className="card-body">
-        <form className="table-responsive col-4" onSubmit={onSubmit}>
+        <form className="table-responsive" onSubmit={onSubmit} style={{ maxWidth: "400px" }}>
           <p>{message}</p>
           <table className="table table-bordered" id="dataTable">
             <thead>
@@ -49,7 +49,7 @@ export const CreateOrganisationForm = ({ api, addOrganisation, schemes }: Create
             </tr>
             </tbody>
           </table>
-          <button type="submit" className="btn btn-primary btn-user btn-block col-2" disabled={name.length < 3 || scheme === ""}>
+          <button style={{ width: "100px" }} type="submit" className="btn btn-primary btn-user btn-block" disabled={name.length < 3 || scheme === ""}>
             Create
           </button>
         </form>

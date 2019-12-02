@@ -27,7 +27,7 @@ export const CreateSchemeForm = ({ api, addScheme }: CreateSchemeFormProps) => {
         <h6 className="m-0 font-weight-bold text-primary">Create</h6>
       </div>
       <div className="card-body">
-        <form className="table-responsive col-2" onSubmit={onSubmit}>
+        <form className="table-responsive" onSubmit={onSubmit} style={{ maxWidth: "250px" }}>
           <p>{message}</p>
           <table className="table table-bordered" id="dataTable">
             <thead>
@@ -41,7 +41,7 @@ export const CreateSchemeForm = ({ api, addScheme }: CreateSchemeFormProps) => {
             </tr>
             </tbody>
           </table>
-          <button type="submit" className="btn btn-primary btn-user btn-block col-6" disabled={name.length < 3}>
+          <button  style={{ width: "100px" }} type="submit" className="btn btn-primary btn-user btn-block" disabled={name.length < 3}>
             Create
           </button>
         </form>
