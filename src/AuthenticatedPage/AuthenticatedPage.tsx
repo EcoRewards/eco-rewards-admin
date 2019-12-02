@@ -7,6 +7,7 @@ import { Footer } from "./Footer/Footer";
 import { Authentication } from "../Authentication";
 import { SchemesPage } from "./SchemesPage/SchemesPage";
 import { OrganisationsPage } from "./OrganisationsPage/OrganisationsPage";
+import { GroupsPage } from './GroupsPage/GroupsPage';
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
   return (
@@ -22,6 +23,9 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
               </Route>
               <Route path="/organisations">
                 <OrganisationsPage api={auth.getAuthenticatedApi()} />
+              </Route>
+              <Route path="/groups">
+                <GroupsPage api={auth.getAuthenticatedApi()} />
               </Route>
               <Route path="/">
                 <DashboardPage />
