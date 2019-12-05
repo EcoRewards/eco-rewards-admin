@@ -46,6 +46,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, api }: TablePr
             data={filteredItems}
             pagination
             paginationResetDefaultPage={resetPaginationToggle}
+            paginationPerPage={30}
             subHeader
             subHeaderComponent={subHeaderComponentMemo}
             selectableRows
