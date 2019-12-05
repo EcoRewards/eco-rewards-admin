@@ -19,7 +19,7 @@ export const MembersTable = ({ api, members, links, removeMembers }: MembersTabl
     name: "ID",
     selector: "numeric_id",
     sortable: true,
-    width: "100px"
+    width: "180px"
   },{
     name: "Group",
     selector: "name",
