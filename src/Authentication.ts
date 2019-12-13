@@ -45,8 +45,13 @@ export class Authentication {
   public getAuthenticatedApi() {
     return this.authenticatedApi;
   }
+
+  public getName() {
+    return this.cookie.name;
+  }
 }
 
 interface AuthenticationCookie {
   token?: string
+  name?: string
 }
