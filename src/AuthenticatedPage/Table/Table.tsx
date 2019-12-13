@@ -20,7 +20,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, api }: TablePr
 
         await Promise.all(selectedRows.map(r => api.delete(r.id)));
 
-        removeRows(selectedRows);
+        removeRows!(selectedRows);
       }
     };
 
@@ -50,7 +50,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, api }: TablePr
             subHeader
             subHeaderComponent={subHeaderComponentMemo}
             selectableRows
-            contextActions={contextActions}
+            contextActions={removeRows ? contextActions : undefined}
             onSelectedRowsChange={handleRowSelected}
             clearSelectedRows={toggleCleared}
           />
@@ -63,7 +63,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, api }: TablePr
 interface TableProps<T extends Row> {
   rows: T[],
   columns: IDataTableColumn<T>[],
-  removeRows(rows: Row[]): any,
+  removeRows?: (rows: Row[]) => any,
   api: AxiosInstance
 }
 

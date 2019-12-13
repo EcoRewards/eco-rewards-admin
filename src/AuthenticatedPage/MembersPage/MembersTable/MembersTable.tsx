@@ -1,5 +1,4 @@
 import React from "react";
-import { toMemberId } from "eco-rewards-hub/dist/src/member/Member";
 import { Row, Table } from "../../Table/Table";
 import { AxiosInstance } from "axios";
 import { MemberJsonView } from "eco-rewards-hub";
@@ -7,7 +6,7 @@ import { MemberJsonView } from "eco-rewards-hub";
 export const MembersTable = ({ api, members, links, removeMembers }: MembersTableProps) => {
   const rows = members.map(o => ({
     id: o.id!,
-    numeric_id: toMemberId(o.id!),
+    numeric_id: o.id!.substr(8),
     name: links[o.group].name,
     defaultTransportMode: o.defaultTransportMode,
     defaultDistance: o.defaultDistance + " miles",

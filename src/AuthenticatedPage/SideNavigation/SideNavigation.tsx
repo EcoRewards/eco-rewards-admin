@@ -52,6 +52,12 @@ export const SideNavigation = () => {
           <span>Members</span></NavLink>
       </li>
 
+      <li className="nav-item">
+        <NavLink activeClassName="active" className="nav-link" to="/journeys">
+          <i className="fas fa-fw fa-bus"></i>
+          <span>Journeys</span></NavLink>
+      </li>
+
       <hr className="sidebar-divider"/>
 
       <div className="sidebar-heading">
