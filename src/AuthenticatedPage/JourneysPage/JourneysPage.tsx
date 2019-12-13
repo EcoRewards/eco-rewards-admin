@@ -19,7 +19,7 @@ export const JourneysPage = ({api}: JourneysPageProps) => {
   }, [api, apiData]);
 
   const addJourneys = () => {
-
+    setApiData(null);
   };
 
   return (
