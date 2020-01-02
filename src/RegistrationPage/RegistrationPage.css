@@ -1,0 +1,16 @@
+
+body {
+    background-color: #4e73df;
+    background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    background-size: cover;
+}
+
+.bg-login-image {
+    background: url("/logo.png") no-repeat  left 100px top 80px !important;
+}
+
+.form-group select {
+    border-radius: 10rem;
+    height: 45px;
+    font-size: 0.8rem;
+}

@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { AxiosInstance } from "axios";
 import { HttpResponse, MemberJsonView, GroupJsonView } from "eco-rewards-hub";
+import { TransportModeList } from "../../../TransportModeList/TransportModeList";
 
 export const CreateMemberForm = ({ api, addMembers, groups }: CreateMemberFormProps) => {
   const [group, setGroup] = useState("");
@@ -49,19 +50,11 @@ export const CreateMemberForm = ({ api, addMembers, groups }: CreateMemberFormPr
               <td>
                 <select name="group" onChange={e => setGroup(e.target.value)}>
                   <option value="">&lt;Select group&gt;</option>
-                  { groups.map(s => <GroupOption key={s.id} group={s} />)}
+                  { groups.map(s => <option value={s.id}>{s.name}</option>)}
                 </select>
               </td>
               <td>
-                <select name="defaultTransportMode" onChange={e => setDefaultTransportMode(e.target.value)}>
-                  <option value="">None</option>
-                  <option selected={defaultTransportMode === "Bus"} value="Bus">Bus</option>
-                  <option selected={defaultTransportMode === "Train"} value="Train">Train</option>
-                  <option selected={defaultTransportMode === "Work From Home"} value="Work From Home">Work From Home</option>
-                  <option selected={defaultTransportMode === "Walk"} value="Walk">Walk</option>
-                  <option selected={defaultTransportMode === "Bicycle"} value="Bicycle">Cycling</option>
-                  <option selected={defaultTransportMode === "Car Share"} value="Car Share">Car Share</option>
-                </select>
+                <TransportModeList defaultTransportMode={defaultTransportMode} setDefaultTransportMode={setDefaultTransportMode} />
               </td>
               <td><input type="text" name="defaultDistance" value={defaultDistance} onChange={e => setDefaultDistance(e.target.value)} className="col-12"/></td>
               <td><input type="text" name="quantity" value={quantity} onChange={e => setQuantity(e.target.value)} className="col-12"/></td>
@@ -74,12 +67,6 @@ export const CreateMemberForm = ({ api, addMembers, groups }: CreateMemberFormPr
         </form>
       </div>
     </div>
-  );
-};
-
-const GroupOption = ({ group }: { group: GroupJsonView }) => {
-  return (
-    <option value={group.id}>{group.name}</option>
   );
 };
 
