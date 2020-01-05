@@ -4,14 +4,16 @@ import { AxiosInstance } from "axios";
 import { MemberJsonView } from "eco-rewards-hub";
 
 export const MembersTable = ({ api, members, links, removeMembers }: MembersTableProps) => {
-  const rows = members.map(o => ({
-    id: o.id!,
-    numeric_id: o.id!.substr(8),
-    name: links[o.group].name,
-    defaultTransportMode: o.defaultTransportMode,
-    defaultDistance: o.defaultDistance + " miles",
-    carbonSaving: o.carbonSaving + "kg",
-    rewards: o.rewards
+  const rows = members.map(m => ({
+    id: m.id!,
+    numeric_id: m.id!.substr(8),
+    name: links[m.group].name,
+    defaultTransportMode: m.defaultTransportMode,
+    defaultDistance: m.defaultDistance + " miles",
+    carbonSaving: m.carbonSaving + "kg",
+    rewards: m.rewards,
+    organisation: links[links[m.group].organisation].name,
+    scheme: links[links[links[m.group].organisation].scheme].name
   }));
 
   const columns = [{
@@ -19,6 +21,14 @@ export const MembersTable = ({ api, members, links, removeMembers }: MembersTabl
     selector: "numeric_id",
     sortable: true,
     width: "180px"
+  },{
+    name: "Scheme",
+    selector: "scheme",
+    sortable: true
+  },{
+    name: "Organisation",
+    selector: "organisation",
+    sortable: true
   },{
     name: "Group",
     selector: "name",

@@ -50,7 +50,7 @@ export const CreateMemberForm = ({ api, addMembers, groups }: CreateMemberFormPr
               <td>
                 <select name="group" onChange={e => setGroup(e.target.value)}>
                   <option value="">&lt;Select group&gt;</option>
-                  { groups.map(s => <option value={s.id}>{s.name}</option>)}
+                  { groups.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                 </select>
               </td>
               <td>
