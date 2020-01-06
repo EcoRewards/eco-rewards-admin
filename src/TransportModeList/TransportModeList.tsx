@@ -19,7 +19,7 @@ export const TransportModeList = ({ defaultTransportMode, setDefaultTransportMod
             name="defaultTransportMode"
             defaultValue={defaultTransportMode}
             onChange={e => setDefaultTransportMode(e.target.value)}>
-      <option value="">Select transport mode</option>
+      <option value="">Select green transport mode</option>
       { modes.map((m, i) => <option key={i} value={m.toLowerCase()}>{m}</option>)}
     </select>
   );

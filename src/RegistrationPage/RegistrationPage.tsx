@@ -1,8 +1,8 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { TransportModeList } from "../TransportModeList/TransportModeList";
-import { GroupJsonView } from "eco-rewards-hub";
 import "./RegistrationPage.css";
+import { GroupSelect } from "./GroupSelect/GroupSelect";
 
 export const RegistrationPage = ({ api }: RegistrationPageProps) => {
   const [success, setSuccess] = useState(false);
@@ -12,12 +12,14 @@ export const RegistrationPage = ({ api }: RegistrationPageProps) => {
   const [defaultDistance, setDefaultDistance] = useState(1.0);
   const [group, setGroup] = useState("");
   const [groups, setGroups] = useState([]);
+  const [links, setLinks] = useState({});
 
   useEffect(() => {
     async function fetchGroups() {
       const response = await api.get("/groups");
 
       setGroups(response.data.data);
+      setLinks(response.data.links);
     }
 
     if (groups.length === 0) {
@@ -37,7 +39,8 @@ export const RegistrationPage = ({ api }: RegistrationPageProps) => {
     }
   };
 
-  const canSubmit = smartcard.length >= 10 && defaultTransportMode !== "" && defaultDistance > 0 && group !== "";
+  const smartcardNumberValid = smartcard.length === 16 || smartcard.length === 18;
+  const canSubmit = smartcardNumberValid && defaultTransportMode !== "" && defaultDistance > 0 && group !== "";
   const form = () => {
     return (
       <>
@@ -47,7 +50,10 @@ export const RegistrationPage = ({ api }: RegistrationPageProps) => {
         <form className="user">
           <div className="form-group">
             <input type="text" className="form-control form-control-user" id="exampleInputSmartcard"
-                   aria-describedby="smartcardHelp" placeholder="Enter Smartcard number..." required
+                   pattern="^[0-9]*$"
+                   minLength={16}
+                   maxLength={18}
+                   aria-describedby="smartcardHelp" placeholder="Enter Smartcard number" required
                    onChange={e => setSmartcard(e.target.value)}
             />
           </div>
@@ -56,15 +62,12 @@ export const RegistrationPage = ({ api }: RegistrationPageProps) => {
           </div>
           <div className="form-group">
             <input type="text" className="form-control form-control-user" id="exampleInputDistance"
-                   aria-describedby="distanceHelp" placeholder="Enter distance in miles... " required
+                   aria-describedby="distanceHelp" placeholder="Enter normal distance in miles" required
                    onChange={e => setDefaultDistance(+e.target.value)}
             />
           </div>
           <div className="form-group">
-            <select className="custom-select form-control form-control-sm" name="group" onChange={e => setGroup(e.target.value)}>
-              <option value="">&lt;Select group&gt;</option>
-              { groups.map((s: GroupJsonView) => <option value={s.id}>{s.name}</option>)}
-            </select>
+            <GroupSelect group={group} setGroup={setGroup} groups={groups} links={links} />
           </div>
           <button type="submit" className="btn btn-primary btn-user btn-block" onClick={register} disabled={!canSubmit}>
             Register
@@ -80,13 +83,13 @@ export const RegistrationPage = ({ api }: RegistrationPageProps) => {
     return (
       <>
         <div className="text-center">
-          <h1 className="h4 text-gray-900 mb-4">Success</h1>
+          <h1 className="h4 text-gray-900 mb-4">SUCCESS - Your card has been registered!</h1>
         </div>
         <p>
           Thank you.
         </p>
         <p>
-          Your smartcard has been registered. Using your smartcard on public transport will now add points and carbon savings to your account.
+          Using your smartcard to report green travel choices will now add points and carbon savings to your account. For more information and to access Eco Rewards, go to <a href="ecorewards.org.uk and">ecorewards.org.uk</a> create your personal account.
         </p>
         <br/>
       </>
