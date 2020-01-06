@@ -20,7 +20,7 @@ export const MembersTable = ({ api, members, links, removeMembers }: MembersTabl
     name: "ID",
     selector: "numeric_id",
     sortable: true,
-    width: "180px"
+    width: "145px"
   },{
     name: "Scheme",
     selector: "scheme",
@@ -36,19 +36,23 @@ export const MembersTable = ({ api, members, links, removeMembers }: MembersTabl
   },{
     name: "Default Mode",
     selector: "defaultTransportMode",
-    sortable: false
+    sortable: false,
+    width: "140px"
   },{
     name: "Default Distance",
     selector: "defaultDistance",
-    sortable: true
+    sortable: true,
+    width: "130px"
   },{
     name: "Rewards",
     selector: "rewards",
-    sortable: true
+    sortable: true,
+    width: "90px"
   },{
     name: "Carbon Saving",
     selector: "carbonSaving",
-    sortable: true
+    sortable: true,
+    width: "130px"
   }];
 
   return (
