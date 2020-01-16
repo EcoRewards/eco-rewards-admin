@@ -17,7 +17,7 @@ export const CreateJourneyForm = ({ api, onJourneysUploaded }: CreateJourneyForm
       formData.append("file", file.current.files[0] as any, "upload.csv");
 
       const headers = { "Content-Type": "multipart/form-data" };
-      const errors = await api.post("/journey", formData, { headers }).then(r => r.data.data.errors);
+      const errors = await api.post("/journeys", formData, { headers }).then(r => r.data.data.errors);
       const newMessage = errors.length === 0 ? "Upload successful" : errors.join("\n");
 
       setMessage(newMessage);
