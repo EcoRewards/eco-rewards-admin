@@ -45,6 +45,7 @@ export const MembersPage = ({api}: MembersPageProps) => {
       <MembersTable
         api={api}
         removeMembers={removeMembers}
+        groups={apiData ? apiData.groups.data : []}
         members={apiData ? apiData.members.data : []}
         links={apiData ? apiData.members.links : {}}/>
     </div>

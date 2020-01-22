@@ -4,8 +4,8 @@ import styled from "styled-components";
 import "./Table.css";
 import { AxiosInstance } from "axios";
 
-export const Table = <T extends Row>({ rows, columns, removeRows, api }: TableProps<T>) => {
-  const [selectedRows, setSelectedRows] = useState([] as Row[]);
+export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }: TableProps<T>) => {
+  const [selectedRows, setSelectedRows] = useState([] as T[]);
   const [toggleCleared, setToggleCleared] = useState(false);
 
   const handleRowSelected = useCallback(state => {
@@ -24,8 +24,13 @@ export const Table = <T extends Row>({ rows, columns, removeRows, api }: TablePr
       }
     };
 
-    return <button className="btn btn-danger" key="delete" onClick={handleDelete}>Delete</button>;
-  }, [selectedRows, toggleCleared, api, removeRows]);
+    const deleteButton = <button className="btn btn-danger" key="delete" onClick={handleDelete}>Delete</button>;
+    const editButton = editRow && selectedRows.length === 1
+      ? <button className="btn btn-primary" key="edit" onClick={() => editRow(selectedRows[0])}>Edit</button>
+      : null;
+
+    return <>{editButton} {deleteButton}</>;
+  }, [selectedRows, toggleCleared, api, removeRows, editRow]);
 
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle] = useState(false);
@@ -64,6 +69,7 @@ interface TableProps<T extends Row> {
   rows: T[],
   columns: IDataTableColumn<T>[],
   removeRows?: (rows: Row[]) => any,
+  editRow?: (row: T) => any,
   api: AxiosInstance
 }
 
