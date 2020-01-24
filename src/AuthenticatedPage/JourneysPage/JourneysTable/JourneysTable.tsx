@@ -7,19 +7,17 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
   const rows = journeys.map(o => ({
     ...o,
     name: o.source,
-    id: o.id + "",
-    numeric_id: o.id!,
-    memberId: o.memberId.substr(8),
+    id: o.memberId,
+    numeric_id: o.memberId.substr(8),
     processed: o.processed === null ? "Pending" : o.processed,
     carbonSaving: o.carbonSaving === null ? "-" : o.carbonSaving + "kg",
     rewardsEarned: o.rewardsEarned === null ? "-" : o.rewardsEarned
   }));
 
   const columns = [{
-    name: "ID",
+    name: "Member ID",
     selector: "numeric_id",
-    sortable: true,
-    width: "80px"
+    sortable: true
   },{
     name: "Source",
     selector: "source",
@@ -35,10 +33,6 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
   },{
     name: "Travel Date",
     selector: "travelDate",
-    sortable: true
-  },{
-    name: "Member ID",
-    selector: "memberId",
     sortable: true
   },{
     name: "Distance",
