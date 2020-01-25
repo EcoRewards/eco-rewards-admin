@@ -10,6 +10,7 @@ export const MembersTable = ({ api, members, links, removeMembers }: MembersTabl
     name: links[m.group].name,
     defaultTransportMode: m.defaultTransportMode,
     defaultDistance: m.defaultDistance + " miles",
+    totalMiles: m.totalMiles + " miles",
     carbonSaving: m.carbonSaving + "kg",
     rewards: m.rewards,
     organisation: links[links[m.group].organisation].name,
@@ -51,6 +52,11 @@ export const MembersTable = ({ api, members, links, removeMembers }: MembersTabl
   },{
     name: "Carbon Saving",
     selector: "carbonSaving",
+    sortable: true,
+    width: "130px"
+  },{
+    name: "Total Miles",
+    selector: "totalMiles",
     sortable: true,
     width: "130px"
   }];
