@@ -36,7 +36,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
                 <JourneysPage api={auth.getAuthenticatedApi()} />
               </Route>
               <Route path="/">
-                <DashboardPage />
+                <DashboardPage api={auth.getAuthenticatedApi()} />
               </Route>
             </Switch>
           </HashRouter>
