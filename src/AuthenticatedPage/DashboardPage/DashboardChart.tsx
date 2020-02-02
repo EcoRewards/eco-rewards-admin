@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import React from "react";
 
 const colours = ["#ffc658", "#8884d8", "#82ca9d"];
@@ -15,20 +15,16 @@ export const DashboardChart = ({ title, names, data }: DashboardChartProps) => {
         {
           !data || data.length === 0
             ? <p>No data.</p>
-            : <BarChart
-                width={1376}
-                height={400}
-                data={data}
-                margin={{
-                  top: 5, right: 30, left: 20, bottom: 5,
-                }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                { bars }
-              </BarChart>
+            : <ResponsiveContainer width="99%" height={500}>
+                <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  { bars }
+                </BarChart>
+            </ResponsiveContainer>
         }
       </div>
     </div>

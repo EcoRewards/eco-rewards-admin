@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { DashboardChart } from "./DashboardChart";
 import { ReportScopeSelect } from "./ReportScopeSelect";
+import { DateSelector } from "./DateSelector";
 
 export const DashboardPage = ({ api }: DashboardPageProps) => {
   const [scope, setScope] = useState("/global/0/report");
@@ -11,6 +12,7 @@ export const DashboardPage = ({ api }: DashboardPageProps) => {
   const [distance, setDistance] = useState();
   const [groups, setGroups] = useState([]);
   const [links, setLinks] = useState({});
+  const [dates, setDates] = useState();
 
   useEffect(() => {
     async function fetchGroups() {
@@ -27,7 +29,8 @@ export const DashboardPage = ({ api }: DashboardPageProps) => {
 
   useEffect(() => {
     async function fetchApiData() {
-      const response = await api.get(scope);
+      const dateRange = dates ? "?from=" + dates.split(",").join("&to=") : "";
+      const response = await api.get(scope + dateRange);
 
       const carbonSaving = {} as Record<string, Record<string, number>>;
       const rewardPoints = {} as Record<string, Record<string, number>>;
@@ -53,17 +56,29 @@ export const DashboardPage = ({ api }: DashboardPageProps) => {
     if (!names) {
       fetchApiData();
     }
-  }, [api, names, scope]);
+  }, [api, names, scope, dates]);
 
   const onScopeChange = (scope: string) => {
     setScope(scope ? scope + "/report" : "/global/0/report");
     setNames(null);
   };
 
+  const onDateChange = (dates: string) => {
+    setDates(dates);
+    setNames(null);
+  };
+
   return (
     <div className="container-fluid">
       <h1 className="h3 mb-2 text-gray-800">Dashboard</h1>
-      <ReportScopeSelect groups={groups} links={links} onChange={onScopeChange}/>
+      <div className="row">
+        <div className="col-3">
+          <ReportScopeSelect groups={groups} links={links} onChange={onScopeChange}/>
+        </div>
+        <div className="col-3">
+          <DateSelector onChange={onDateChange}/>
+        </div>
+      </div>
       { !names
         ? <p>Loading</p>
         : <>
