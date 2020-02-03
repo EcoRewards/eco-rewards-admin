@@ -32,6 +32,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     group: m.group,
     defaultTransportMode: m.defaultTransportMode,
     defaultDistance: m.defaultDistance + " miles",
+    totalMiles: m.totalMiles + " miles",
     carbonSaving: m.carbonSaving + "kg",
     rewards: m.rewards,
     organisation: links[links[m.group].organisation].name,
@@ -42,7 +43,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     name: "ID",
     selector: "numeric_id",
     sortable: true,
-    width: "160px"
+    width: "175px"
   },{
     name: "Scheme",
     selector: "scheme",
@@ -75,6 +76,11 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     selector: "carbonSaving",
     sortable: true,
     width: "130px"
+  },{
+    name: "Total Miles",
+    selector: "totalMiles",
+    sortable: true,
+    width: "130px"
   }];
 
   const [editMember, setEditMember] = React.useState();
@@ -82,7 +88,9 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   const [defaultTransportMode, setDefaultTransportMode] = React.useState();
   const [defaultDistance, setDefaultDistance] = React.useState();
   const [group, setGroup] = React.useState();
-  const closeModal = () => setEditMember(undefined);
+  const closeModal = () => {
+    window.location.reload();
+  };
   const onEdit = (m: MemberRow) => {
     setEditMember(m);
     setDefaultDistance(+m.defaultDistance.replace(" miles", ""));
