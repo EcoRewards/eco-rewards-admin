@@ -16,6 +16,10 @@ export const SchemesTable = ({ api, schemes, removeSchemes }: SchemesTableProps)
     name: "Name",
     selector: "name",
     sortable: true
+  },{
+    name: "VAC Client ID",
+    selector: "vacClientId",
+    sortable: true
   }];
 
   return (

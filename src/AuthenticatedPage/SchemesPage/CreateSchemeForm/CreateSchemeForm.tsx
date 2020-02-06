@@ -4,15 +4,17 @@ import { HttpResponse, SchemeJsonView } from "eco-rewards-hub";
 
 export const CreateSchemeForm = ({ api, addScheme }: CreateSchemeFormProps) => {
   const [name, setName] = useState("");
+  const [vacClientId, setVacClientId] = useState("0");
   const [message, setMessage] = useState("");
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/scheme", { name });
+      const response = await api.post("/scheme", { name, vacClientId: +vacClientId });
 
       setName("");
+      setVacClientId("0");
       setMessage("Scheme created.");
       addScheme(response.data);
     }
@@ -27,17 +29,19 @@ export const CreateSchemeForm = ({ api, addScheme }: CreateSchemeFormProps) => {
         <h6 className="m-0 font-weight-bold text-primary">Create</h6>
       </div>
       <div className="card-body">
-        <form className="table-responsive" onSubmit={onSubmit} style={{ maxWidth: "250px" }}>
+        <form className="table-responsive" onSubmit={onSubmit} style={{ maxWidth: "450px" }}>
           <p>{message}</p>
           <table className="table table-bordered" id="dataTable">
             <thead>
             <tr>
               <th>Name</th>
+              <th>VAC Client ID</th>
             </tr>
             </thead>
             <tbody>
             <tr>
               <td><input type="text" name="name" value={name} onChange={e => setName(e.target.value)} className="col-12"/></td>
+              <td><input type="text" name="vacClientId" value={vacClientId} onChange={e => setVacClientId(e.target.value)} className="col-12"/></td>
             </tr>
             </tbody>
           </table>
