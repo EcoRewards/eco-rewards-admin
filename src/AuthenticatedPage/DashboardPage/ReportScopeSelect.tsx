@@ -21,11 +21,11 @@ export const ReportScopeSelect = ({ groups, links, onChange }: ReportScopeSelect
 
   return (
     <div className="group-select">
-      <select className="custom-select form-control form-control-sm" name="scheme" onChange={e => bubbleChange(setScheme, e.target.value)}>
+      <select className="col-3 custom-select form-control form-control-sm mr-3" name="scheme" onChange={e => bubbleChange(setScheme, e.target.value)}>
         <option value="">All schemes</option>
         { schemes.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
       </select>
-      <select disabled={organisations.length === 0} className="custom-select form-control form-control-sm" name="organisation" onChange={e => onChange(e.target.value || scheme)}>
+      <select disabled={organisations.length === 0} className="col-3 custom-select form-control form-control-sm" name="organisation" onChange={e => onChange(e.target.value || scheme)}>
         <option value="">All organisations</option>
         { organisations.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}
       </select>

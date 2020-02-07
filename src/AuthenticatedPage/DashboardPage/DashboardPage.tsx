@@ -72,7 +72,7 @@ export const DashboardPage = ({ api }: DashboardPageProps) => {
     <div className="container-fluid">
       <h1 className="h3 mb-2 text-gray-800">Dashboard</h1>
       <div className="row">
-        <div className="col-3">
+        <div className="col-9">
           <ReportScopeSelect groups={groups} links={links} onChange={onScopeChange}/>
         </div>
         <div className="col-3">
