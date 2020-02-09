@@ -32,6 +32,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     group: m.group,
     defaultTransportMode: m.defaultTransportMode,
     defaultDistance: m.defaultDistance + " miles",
+    previousTransportMode: m.previousTransportMode,
     totalMiles: m.totalMiles + " miles",
     carbonSaving: m.carbonSaving + "kg",
     rewards: m.rewards,
@@ -59,6 +60,11 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   },{
     name: "Default Mode",
     selector: "defaultTransportMode",
+    sortable: false,
+    width: "140px"
+  },{
+    name: "Previous Mode",
+    selector: "previousTransportMode",
     sortable: false,
     width: "140px"
   },{
@@ -188,6 +194,7 @@ interface MemberRow {
   group: string,
   defaultTransportMode: string,
   defaultDistance: string,
+  previousTransportMode: string,
   carbonSaving: string,
   rewards: number,
   organisation: string,
