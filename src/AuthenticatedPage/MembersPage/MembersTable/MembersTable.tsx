@@ -92,6 +92,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   const [editMember, setEditMember] = React.useState();
   const [message, setMessage] = React.useState();
   const [defaultTransportMode, setDefaultTransportMode] = React.useState();
+  const [previousTransportMode, setPreviousTransportMode] = React.useState();
   const [defaultDistance, setDefaultDistance] = React.useState();
   const [group, setGroup] = React.useState();
   const closeModal = () => {
@@ -101,6 +102,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     setEditMember(m);
     setDefaultDistance(+m.defaultDistance.replace(" miles", ""));
     setDefaultTransportMode(m.defaultTransportMode);
+    setPreviousTransportMode(m.previousTransportMode);
     setGroup(m.group);
   };
 
@@ -108,7 +110,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     e.preventDefault();
 
     try {
-      await api.put(editMember.id, { group, defaultTransportMode, defaultDistance: +defaultDistance });
+      await api.put(editMember.id, { group, defaultTransportMode, previousTransportMode, defaultDistance: +defaultDistance });
 
       setMessage("Member updated.");
     }
@@ -151,6 +153,14 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
                   </td>
                   <td>
                     <TransportModeList defaultTransportMode={defaultTransportMode} setDefaultTransportMode={setDefaultTransportMode} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Previous Transport Mode
+                  </td>
+                  <td>
+                    <TransportModeList defaultTransportMode={previousTransportMode} setDefaultTransportMode={setPreviousTransportMode} />
                   </td>
                 </tr>
                 <tr>
