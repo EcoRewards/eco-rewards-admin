@@ -96,7 +96,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   const [defaultDistance, setDefaultDistance] = React.useState();
   const [group, setGroup] = React.useState();
   const closeModal = () => {
-    window.location.reload();
+    //window.location.reload();
   };
   const onEdit = (m: MemberRow) => {
     setEditMember(m);
@@ -110,9 +110,12 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     e.preventDefault();
 
     try {
-      await api.put(editMember.id, { group, defaultTransportMode, previousTransportMode, defaultDistance: +defaultDistance });
+      const newProps = { group, defaultTransportMode, previousTransportMode, defaultDistance: +defaultDistance };
+      await api.put(editMember.id, newProps);
 
-      setMessage("Member updated.");
+      const member = members.find(m => m.id === editMember.id);
+      Object.assign(member, newProps);
+      setEditMember(null);
     }
     catch (e) {
       setMessage("Error while updating.")

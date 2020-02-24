@@ -3,6 +3,9 @@ import React from "react";
 export const TransportModeList = ({ defaultTransportMode, setDefaultTransportMode }: TransportModeListProps) => {
   const modes = [
     "Car share",
+    "Large car",
+    "Medium car",
+    "Small car",
     "Electric car",
     "Taxi",
     "Park and ride",
