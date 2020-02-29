@@ -4,13 +4,15 @@ import { AxiosInstance } from "axios";
 import { JourneyJsonView } from "eco-rewards-hub";
 
 export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
+  console.log(journeys[0]);
   const rows = journeys.map(o => ({
     ...o,
-    name: o.source,
+    name: o.memberId,
     id: o.memberId,
     numeric_id: o.memberId.substr(8),
     processed: o.processed === null ? "Pending" : o.processed,
     carbonSaving: o.carbonSaving === null ? "-" : o.carbonSaving + "kg",
+    distance: o.distance === null ? "-" : o.distance + " miles",
     rewardsEarned: o.rewardsEarned === null ? "-" : o.rewardsEarned
   }));
 
@@ -21,35 +23,48 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
   },{
     name: "Source",
     selector: "source",
-    sortable: true
+    sortable: true,
+    width: "110px"
+  },{
+    name: "Device",
+    selector: "deviceId",
+    sortable: true,
+    width: "110px"
   },{
     name: "Uploaded",
     selector: "uploaded",
-    sortable: true
+    sortable: true,
+    width: "170px"
   },{
     name: "Processed",
     selector: "processed",
-    sortable: true
+    sortable: true,
+    width: "170px"
   },{
     name: "Travel Date",
     selector: "travelDate",
-    sortable: true
+    sortable: true,
+    width: "170px"
   },{
     name: "Distance",
     selector: "distance",
-    sortable: true
+    sortable: true,
+    width: "90px"
   },{
     name: "Mode",
     selector: "mode",
-    sortable: true
+    sortable: true,
+    width: "90px"
   },{
     name: "Rewards Earned",
     selector: "rewardsEarned",
-    sortable: true
+    sortable: true,
+    width: "140px"
   },{
     name: "Carbon Saving",
     selector: "carbonSaving",
-    sortable: true
+    sortable: true,
+    width: "140px"
   }];
 
   return (
