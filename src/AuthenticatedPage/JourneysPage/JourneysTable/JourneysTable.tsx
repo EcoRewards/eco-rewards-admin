@@ -4,7 +4,6 @@ import { AxiosInstance } from "axios";
 import { JourneyJsonView } from "eco-rewards-hub";
 
 export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
-  console.log(journeys[0]);
   const rows = journeys.map(o => ({
     ...o,
     name: o.memberId,

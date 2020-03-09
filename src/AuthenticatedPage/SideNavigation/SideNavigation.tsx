@@ -52,12 +52,6 @@ export const SideNavigation = () => {
           <span>Members</span></NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink activeClassName="active" className="nav-link" to="/journeys">
-          <i className="fas fa-fw fa-bus"></i>
-          <span>Journeys</span></NavLink>
-      </li>
-
       <hr className="sidebar-divider"/>
 
       <div className="sidebar-heading">
@@ -70,6 +64,11 @@ export const SideNavigation = () => {
           <span>Journeys</span></NavLink>
       </li>
 
+        <li className="nav-item">
+            <NavLink activeClassName="active" className="nav-link" to="/devices">
+            <i className="fas fa-fw fa-bus"></i>
+            <span>Device Status</span></NavLink>
+        </li>
     </ul>
   );
 };
