@@ -19,8 +19,8 @@ export const DeviceStatusPage = ({api}: DeviceStatusPageProps) => {
 
   return (
     <div className="container-fluid">
-      <h1 className="h3 mb-2 text-gray-800">Journeys</h1>
-      <p className="mb-4">View and upload member journeys.</p>
+      <h1 className="h3 mb-2 text-gray-800">Device Status</h1>
+      <p className="mb-4">View status messages from devices connected to The Things Network.</p>
       <DeviceStatusTable
         api={api}
         statuses={apiData ? apiData.statuses.data : []}/>

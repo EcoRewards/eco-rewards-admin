@@ -89,7 +89,7 @@ export const RegistrationPage = ({ api }: RegistrationPageProps) => {
           Thank you.
         </p>
         <p>
-          Using your smartcard to report green travel choices will now add points and carbon savings to your account. For more information and to access Eco Rewards, go to <a href="ecorewards.org.uk and">ecorewards.org.uk</a> create your personal account.
+          Using your smartcard to report green travel choices will now add points and carbon savings to your account. For more information and to access Eco Rewards, go to <a href="https://www.ecorewards.org.uk">ecorewards.org.uk</a> create your personal account.
         </p>
         <br/>
       </>

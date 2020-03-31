@@ -4,8 +4,8 @@ import { AxiosInstance } from "axios";
 import { DeviceStatusJsonView } from "eco-rewards-hub/dist/src/device/DeviceStatus";
 
 export const DeviceStatusTable = ({ api, statuses }: DeviceStatusTableProps) => {
-  const rows = statuses.map(o => ({
-    id: o.deviceId,
+  const rows = statuses.map((o,i) => ({
+    id: i + "",
     name: o.deviceId,
     numeric_id: o.deviceId,
     received: o.received,
