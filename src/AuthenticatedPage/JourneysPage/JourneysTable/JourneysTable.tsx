@@ -9,7 +9,9 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
     name: o.memberId,
     id: o.memberId,
     numeric_id: o.memberId.substr(8),
-    processed: o.processed === null ? "Pending" : o.processed,
+    uploaded: new Date(o.uploaded + "+0000").toLocaleString(),
+    travelDate: new Date(o.travelDate + "+0000").toLocaleString(),
+    processed: o.processed === null ? "Pending" : new Date(o.processed +"+0000").toLocaleString(),
     carbonSaving: o.carbonSaving === null ? "-" : o.carbonSaving + "kg",
     distance: o.distance === null ? "-" : o.distance + " miles",
     rewardsEarned: o.rewardsEarned === null ? "-" : o.rewardsEarned

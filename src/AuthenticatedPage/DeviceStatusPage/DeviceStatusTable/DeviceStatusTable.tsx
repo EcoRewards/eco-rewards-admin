@@ -8,7 +8,7 @@ export const DeviceStatusTable = ({ api, statuses }: DeviceStatusTableProps) => 
     id: i + "",
     name: o.deviceId,
     numeric_id: o.deviceId,
-    received: o.received,
+    received: new Date(o.received + "+0000").toLocaleString(),
     status: o.status
   }));
 
