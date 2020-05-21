@@ -8,7 +8,7 @@ import {
 
 export const LoginPage = ({ auth }: LoginPageProps) => {
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<any>();
   const { from } = location.state || { from: { pathname: "/" } };
   const [loginError, setLoginError] = useState("");
   const [username, setUsername] = useState("");
