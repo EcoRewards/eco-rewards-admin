@@ -96,7 +96,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   const [defaultDistance, setDefaultDistance] = React.useState();
   const [group, setGroup] = React.useState();
   const closeModal = () => {
-    //window.location.reload();
+    window.location.reload();
   };
   const onEdit = (m: MemberRow) => {
     setEditMember(m);
