@@ -34,7 +34,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
 
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle] = useState(false);
-  const filteredItems = rows.filter(item => item.name && item.name.includes(filterText));
+  const filteredItems = rows.filter(item => (item.name && item.name.includes(filterText)) || item.id === filterText);
   const subHeaderComponentMemo = useMemo(() => {
     return <FilterComponent onFilter={(e: any) => setFilterText(e.target.value)} filterText={filterText} />;
   }, [filterText]);
