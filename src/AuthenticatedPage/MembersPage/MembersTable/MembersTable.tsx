@@ -94,6 +94,9 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   const [defaultTransportMode, setDefaultTransportMode] = useState<string>("");
   const [previousTransportMode, setPreviousTransportMode] = useState<string>("");
   const [defaultDistance, setDefaultDistance] = useState<number>(0);
+  const [carbonSaving, setCarbonSaving] = useState<number>(0);
+  const [rewards, setRewards] = useState<number>(0);
+  const [totalMiles, setTotalMiles] = useState<number>(0);
   const [group, setGroup] = useState<string>();
   const closeModal = () => {
     window.location.reload();
@@ -103,6 +106,9 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     setDefaultDistance(+m.defaultDistance.replace(" miles", ""));
     setDefaultTransportMode(m.defaultTransportMode);
     setPreviousTransportMode(m.previousTransportMode);
+    setCarbonSaving(+m.carbonSaving.replace("kg", ""));
+    setRewards(m.rewards);
+    setTotalMiles(+m.totalMiles.replace(" miles", ""));
     setGroup(m.group);
   };
 
@@ -114,7 +120,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     }
 
     try {
-      const newProps = { group, defaultTransportMode, previousTransportMode, defaultDistance: +defaultDistance };
+      const newProps = { group, defaultTransportMode, previousTransportMode, defaultDistance, totalMiles, rewards, carbonSaving };
       await api.put(editMember.id, newProps);
 
       const member = members.find(m => m.id === editMember.id);
@@ -176,6 +182,24 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
                   </td>
                   <td><input type="text" name="defaultDistance" value={defaultDistance} onChange={e => setDefaultDistance(+e.target.value)} className="col-12"/></td>
                 </tr>
+                <tr>
+                  <td>
+                    Rewards
+                  </td>
+                  <td><input type="text" name="rewards" value={rewards} onChange={e => setRewards(+e.target.value)} className="col-12"/></td>
+                </tr>
+                <tr>
+                  <td>
+                    Carbon Saving
+                  </td>
+                  <td><input type="text" name="carbonSaving" value={carbonSaving} onChange={e => setCarbonSaving(+e.target.value)} className="col-12"/></td>
+                </tr>
+                <tr>
+                  <td>
+                    Total Miles
+                  </td>
+                  <td><input type="text" name="totalMiles" value={totalMiles} onChange={e => setTotalMiles(+e.target.value)} className="col-12"/></td>
+                </tr>
                 </tbody>
               </table>
               <div className="container row pl-3 pr-0">
@@ -216,4 +240,5 @@ interface MemberRow {
   rewards: number,
   organisation: string,
   scheme: string,
+  totalMiles: string
 }
