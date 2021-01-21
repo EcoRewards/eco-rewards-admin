@@ -21,7 +21,7 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
     await auth.login(username, password);
 
     if (auth.isAuthenticated) {
-      history.replace(from);
+      window.location.href = "/"
     }
     else {
       setLoginError("Unable to login, please try again.");

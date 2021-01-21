@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { CreateOrganisationForm } from "./CreateOrganisationForm/CreateOrganisationForm";
 import { OrganisationsTable } from "./OrganisationsTable/OrganisationsTable";
-import { HttpResponse, OrganisationJsonView } from "eco-rewards-hub";
+import { HttpResponse, OrganisationJsonView, SchemeJsonView } from "eco-rewards-hub";
 import { Row } from "../Table/Table";
 
 export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
-  const [apiData, setApiData] = useState();
+  const [apiData, setApiData] = useState<ApiData>();
 
   useEffect(() => {
     async function fetchApiData() {
@@ -24,14 +24,18 @@ export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
   }, [api, apiData]);
 
   const addOrganisation = (response: HttpResponse<OrganisationJsonView>) => {
-    apiData.organisations.data.push(response.data);
-    apiData.organisations.links = { ...response.links, ...apiData.organisations.links };
-    setApiData({ ...apiData });
+    if (apiData) {
+      apiData.organisations.data.push(response.data);
+      apiData.organisations.links = { ...response.links, ...apiData.organisations.links };
+      setApiData({ ...apiData });
+    }
   };
 
   const removeOrganisations = (removed: Row[]) => {
-    apiData.organisations.data = apiData.organisations.data.filter((r1: Row) => !removed.some(r2 => r1.id === r2.id));
-    setApiData({ ...apiData });
+    if (apiData) {
+      apiData.organisations.data = apiData.organisations.data.filter(r1 => !removed.some(r2 => r1.id === r2.id));
+      setApiData({ ...apiData });
+    }
   };
 
   return (
@@ -53,4 +57,15 @@ export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
 
 interface OrganisationsPageProps {
   api: AxiosInstance
+}
+
+interface ApiData {
+  organisations: {
+    data: OrganisationJsonView[],
+    links: Record<string, any>
+  },
+  schemes: {
+    data: SchemeJsonView[],
+    links: Record<string, any>
+  }
 }

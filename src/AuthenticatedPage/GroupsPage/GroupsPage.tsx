@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { CreateGroupForm } from "./CreateGroupForm/CreateGroupForm";
 import { GroupsTable } from "./GroupsTable/GroupsTable";
-import { HttpResponse, GroupJsonView } from "eco-rewards-hub";
+import { HttpResponse, GroupJsonView, OrganisationJsonView } from "eco-rewards-hub";
 import { Row } from "../Table/Table";
 
 export const GroupsPage = ({api}: GroupsPageProps) => {
-  const [apiData, setApiData] = useState();
+  const [apiData, setApiData] = useState<ApiData>();
 
   useEffect(() => {
     async function fetchApiData() {
@@ -24,14 +24,18 @@ export const GroupsPage = ({api}: GroupsPageProps) => {
   }, [api, apiData]);
 
   const addGroup = (response: HttpResponse<GroupJsonView>) => {
-    apiData.groups.data.push(response.data);
-    apiData.groups.links = { ...response.links, ...apiData.groups.links };
-    setApiData({ ...apiData });
+    if (apiData) {
+      apiData.groups.data.push(response.data);
+      apiData.groups.links = { ...response.links, ...apiData.groups.links };
+      setApiData({ ...apiData });
+    }
   };
 
   const removeGroups = (removed: Row[]) => {
-    apiData.groups.data = apiData.groups.data.filter((r1: Row) => !removed.some(r2 => r1.id === r2.id));
-    setApiData({ ...apiData });
+    if (apiData) {
+      apiData.groups.data = apiData.groups.data.filter(r1 => !removed.some(r2 => r1.id === r2.id));
+      setApiData({ ...apiData });
+    }
   };
 
   return (
@@ -53,4 +57,14 @@ export const GroupsPage = ({api}: GroupsPageProps) => {
 
 interface GroupsPageProps {
   api: AxiosInstance
+}
+
+interface ApiData {
+  groups: {
+    data: GroupJsonView[],
+    links: Record<string, any>
+  },
+  organisations: {
+    data: OrganisationJsonView[]
+  }
 }

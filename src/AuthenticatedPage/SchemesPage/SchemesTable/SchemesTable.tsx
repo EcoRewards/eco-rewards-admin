@@ -5,7 +5,7 @@ import { AxiosInstance } from "axios";
 import { SchemeJsonView } from "eco-rewards-hub";
 
 export const SchemesTable = ({ api, schemes, removeSchemes }: SchemesTableProps) => {
-  const rows = schemes.map(s => ({ numeric_id: toSchemeId(s.id!), ...s }));
+  const rows = schemes.map(s => ({ numeric_id: toSchemeId(s.id!), id: s.id!, ...s }));
 
   const columns = [{
     name: "ID",
@@ -29,6 +29,6 @@ export const SchemesTable = ({ api, schemes, removeSchemes }: SchemesTableProps)
 
 interface SchemesTableProps {
   api: AxiosInstance,
-  schemes: (SchemeJsonView & { id: string })[],
+  schemes: SchemeJsonView[],
   removeSchemes: (schemes: Row[]) => any
 }

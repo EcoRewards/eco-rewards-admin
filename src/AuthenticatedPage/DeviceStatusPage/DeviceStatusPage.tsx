@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { DeviceStatusTable } from "./DeviceStatusTable/DeviceStatusTable";
+import { DeviceStatusJsonView } from "eco-rewards-hub/dist/src/device/DeviceStatus";
 
 export const DeviceStatusPage = ({api}: DeviceStatusPageProps) => {
-  const [apiData, setApiData] = useState();
+  const [apiData, setApiData] = useState<ApiData>();
 
   useEffect(() => {
     async function fetchApiData() {
@@ -30,4 +31,10 @@ export const DeviceStatusPage = ({api}: DeviceStatusPageProps) => {
 
 interface DeviceStatusPageProps {
   api: AxiosInstance
+}
+
+interface ApiData {
+  statuses: {
+    data: DeviceStatusJsonView[]
+  }
 }

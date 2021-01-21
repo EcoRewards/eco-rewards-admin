@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { CreateJourneyForm } from "./CreateJourneyForm/CreateJourneyForm";
 import { JourneysTable } from "./JourneysTable/JourneysTable";
+import { JourneyJsonView } from "eco-rewards-hub";
 
 export const JourneysPage = ({api}: JourneysPageProps) => {
-  const [apiData, setApiData] = useState();
+  const [apiData, setApiData] = useState<ApiData>();
 
   useEffect(() => {
     async function fetchApiData() {
@@ -19,7 +20,7 @@ export const JourneysPage = ({api}: JourneysPageProps) => {
   }, [api, apiData]);
 
   const addJourneys = () => {
-    setApiData(null);
+    setApiData(undefined);
   };
 
   const onExportJourneys = async () => {
@@ -59,4 +60,10 @@ export const JourneysPage = ({api}: JourneysPageProps) => {
 
 interface JourneysPageProps {
   api: AxiosInstance
+}
+
+interface ApiData {
+  journeys: {
+    data: JourneyJsonView[]
+  }
 }
