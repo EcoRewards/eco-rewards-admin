@@ -4,10 +4,10 @@ import { AxiosInstance } from "axios";
 import { JourneyJsonView } from "eco-rewards-hub";
 
 export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
-  const rows = journeys.map(o => ({
+  const rows = journeys.map((o, i) => ({
     ...o,
-    name: o.memberId,
-    id: o.memberId,
+    name: o.memberId.substr(8),
+    id: o.memberId.substr(8) + "_" + i,
     numeric_id: o.memberId.substr(8),
     uploaded: new Date(o.uploaded + "+0000").toLocaleString(),
     travelDate: new Date(o.travelDate + "+0000").toLocaleString(),
