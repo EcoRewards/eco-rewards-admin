@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { CreateMemberForm } from "./CreateMemberForm/CreateMemberForm";
 import { MembersTable } from "./MembersTable/MembersTable";
-import { HttpResponse, MemberJsonView } from "eco-rewards-hub";
+import { GroupJsonView, HttpResponse, MemberJsonView } from "eco-rewards-hub";
 import { Row } from "../Table/Table";
 
 export const MembersPage = ({api}: MembersPageProps) => {
-  const [apiData, setApiData] = useState();
+  const [apiData, setApiData] = useState<ApiData>();
 
   useEffect(() => {
     async function fetchApiData() {
@@ -24,14 +24,18 @@ export const MembersPage = ({api}: MembersPageProps) => {
   }, [api, apiData]);
 
   const addMembers = (response: HttpResponse<MemberJsonView>) => {
-    apiData.members.data = apiData.members.data.concat(response.data);
-    apiData.members.links = { ...response.links, ...apiData.members.links };
-    setApiData({ ...apiData });
+    if (apiData) {
+      apiData.members.data = apiData.members.data.concat(response.data);
+      apiData.members.links = { ...response.links, ...apiData.members.links };
+      setApiData({ ...apiData });
+    }
   };
 
   const removeMembers = (removed: Row[]) => {
-    apiData.members.data = apiData.members.data.filter((r1: Row) => !removed.some(r2 => r1.id === r2.id));
-    setApiData({ ...apiData });
+    if (apiData) {
+      apiData.members.data = apiData.members.data.filter(r1 => !removed.some(r2 => r1.id === r2.id));
+      setApiData({ ...apiData });
+    }
   };
 
   const onExportMembers = async () => {
@@ -75,4 +79,15 @@ export const MembersPage = ({api}: MembersPageProps) => {
 
 interface MembersPageProps {
   api: AxiosInstance
+}
+
+interface ApiData {
+  members: {
+    data: MemberJsonView[],
+    links: Record<string, any>
+  },
+  groups: {
+    data: GroupJsonView[],
+    links: Record<string, any>
+  }
 }

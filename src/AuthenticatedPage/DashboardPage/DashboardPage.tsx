@@ -6,13 +6,13 @@ import { DateSelector } from "./DateSelector";
 
 export const DashboardPage = ({ api }: DashboardPageProps) => {
   const [scope, setScope] = useState("/global/0/report");
-  const [names, setNames] = useState();
-  const [carbonSaving, setCarbonSaving] = useState();
-  const [rewardPoints, setRewardPoints] = useState();
-  const [distance, setDistance] = useState();
+  const [names, setNames] = useState<string[]>();
+  const [carbonSaving, setCarbonSaving] = useState<Record<string, number>[]>([]);
+  const [rewardPoints, setRewardPoints] = useState<Record<string, number>[]>([]);
+  const [distance, setDistance] = useState<Record<string, number>[]>([]);
   const [groups, setGroups] = useState([]);
   const [links, setLinks] = useState({});
-  const [dates, setDates] = useState();
+  const [dates, setDates] = useState<string>("");
 
   useEffect(() => {
     async function fetchGroups() {
@@ -60,12 +60,12 @@ export const DashboardPage = ({ api }: DashboardPageProps) => {
 
   const onScopeChange = (scope: string) => {
     setScope(scope ? scope + "/report" : "/global/0/report");
-    setNames(null);
+    setNames(undefined);
   };
 
   const onDateChange = (dates: string) => {
     setDates(dates);
-    setNames(null);
+    setNames(undefined);
   };
 
   return (
@@ -93,12 +93,4 @@ export const DashboardPage = ({ api }: DashboardPageProps) => {
 
 export interface DashboardPageProps {
   api: AxiosInstance
-}
-
-interface ReportRow {
-  date: string,
-  name: string,
-  totalCarbonSaving: number,
-  totalDistance: number,
-  totalRewardsEarned: number
 }

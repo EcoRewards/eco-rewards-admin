@@ -1,37 +1,30 @@
-import { useCookies } from "react-cookie";
 import Axios, { AxiosInstance } from "axios";
+import Cookies from "universal-cookie";
 
 export class Authentication {
-  private readonly cookie: AuthenticationCookie;
-  private readonly setCookie: (name: string, value: any) => void;
-  private readonly removeCookie: (name: string) => void;
   private readonly authenticatedApi: AxiosInstance;
 
   constructor(
-    private readonly api: AxiosInstance
+    private readonly api: AxiosInstance,
+    private readonly cookies: Cookies
   ) {
-    const [cookie, setCookie, removeCookie] = useCookies(["auth"]);
 
-    this.cookie = cookie.auth;
-    this.setCookie = setCookie;
-    this.removeCookie = removeCookie;
     this.authenticatedApi = Axios.create({
       baseURL: api.defaults.baseURL,
       headers: {
-        authorization: "Basic " + (this.cookie && this.cookie.token)
+        authorization: "Basic " + this.cookies.get("auth")?.token
       }
     });
   }
 
   public get isAuthenticated(): boolean {
-    return this.cookie && this.cookie.token !== undefined;
+    return this.cookies.get("auth") && this.cookies.get("auth").token !== undefined;
   }
 
   public async login(username: string, password: string): Promise<void> {
     try {
       const response = await this.api.post("/login", { username, password });
-
-      this.setCookie("auth", response.data.data);
+      this.cookies.set("auth", response.data.data, { sameSite: "strict" });
     }
     catch (e) {
       console.error(e);
@@ -39,7 +32,7 @@ export class Authentication {
   }
 
   public logout(): void {
-    this.removeCookie("auth");
+    this.cookies.remove("auth");
   }
 
   public getAuthenticatedApi() {
@@ -47,11 +40,6 @@ export class Authentication {
   }
 
   public getName() {
-    return this.cookie.name;
+    return this.cookies.get("name");
   }
-}
-
-interface AuthenticationCookie {
-  token?: string
-  name?: string
 }

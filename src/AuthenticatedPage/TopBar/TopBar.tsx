@@ -7,6 +7,8 @@ export const TopBar = ({ auth }: TopBarProps) => {
     e.preventDefault();
 
     auth.logout();
+
+    window.location.href = "/";
   };
 
   return (

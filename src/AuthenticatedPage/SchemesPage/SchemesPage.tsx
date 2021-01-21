@@ -6,7 +6,7 @@ import { HttpResponse, SchemeJsonView } from "eco-rewards-hub";
 import { Row } from "../Table/Table";
 
 export const SchemesPage = ({api}: SchemesPageProps) => {
-  const [schemes, setSchemes] = useState();
+  const [schemes, setSchemes] = useState<SchemeJsonView[]>();
   const [links, setLinks] = useState({});
 
   useEffect(() => {
@@ -23,13 +23,17 @@ export const SchemesPage = ({api}: SchemesPageProps) => {
   }, [api, schemes]);
 
   const addScheme = (response: HttpResponse<SchemeJsonView>) => {
-    schemes.push(response.data);
-    setSchemes(schemes);
-    setLinks({ ...response.links, ...links});
+    if (typeof schemes !== "undefined") {
+      schemes.push(response.data);
+      setSchemes(schemes);
+      setLinks({ ...response.links, ...links});
+    }
   };
 
   const removeSchemes = (removed: Row[]) => {
-    setSchemes(schemes.filter((s1: SchemeJsonView) => !removed.some(s2 => s1.id === s2.id)));
+    if (typeof schemes !== "undefined") {
+      setSchemes(schemes.filter(s1 => !removed.some(s2 => s1.id === s2.id)));
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { Row, Table } from "../../Table/Table";
 import { AxiosInstance } from "axios";
 import { GroupJsonView, MemberJsonView } from "eco-rewards-hub";
@@ -89,12 +89,15 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     width: "130px"
   }];
 
-  const [editMember, setEditMember] = React.useState();
-  const [message, setMessage] = React.useState();
-  const [defaultTransportMode, setDefaultTransportMode] = React.useState();
-  const [previousTransportMode, setPreviousTransportMode] = React.useState();
-  const [defaultDistance, setDefaultDistance] = React.useState();
-  const [group, setGroup] = React.useState();
+  const [editMember, setEditMember] = useState<MemberRow>();
+  const [message, setMessage] = useState<string>();
+  const [defaultTransportMode, setDefaultTransportMode] = useState<string>("");
+  const [previousTransportMode, setPreviousTransportMode] = useState<string>("");
+  const [defaultDistance, setDefaultDistance] = useState<number>(0);
+  const [carbonSaving, setCarbonSaving] = useState<number>(0);
+  const [rewards, setRewards] = useState<number>(0);
+  const [totalMiles, setTotalMiles] = useState<number>(0);
+  const [group, setGroup] = useState<string>();
   const closeModal = () => {
     window.location.reload();
   };
@@ -103,19 +106,26 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     setDefaultDistance(+m.defaultDistance.replace(" miles", ""));
     setDefaultTransportMode(m.defaultTransportMode);
     setPreviousTransportMode(m.previousTransportMode);
+    setCarbonSaving(+m.carbonSaving.replace("kg", ""));
+    setRewards(m.rewards);
+    setTotalMiles(+m.totalMiles.replace(" miles", ""));
     setGroup(m.group);
   };
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!editMember || typeof defaultDistance === "undefined") {
+      return;
+    }
+
     try {
-      const newProps = { group, defaultTransportMode, previousTransportMode, defaultDistance: +defaultDistance };
+      const newProps = { group, defaultTransportMode, previousTransportMode, defaultDistance, totalMiles, rewards, carbonSaving };
       await api.put(editMember.id, newProps);
 
       const member = members.find(m => m.id === editMember.id);
       Object.assign(member, newProps);
-      setEditMember(null);
+      setEditMember(undefined);
     }
     catch (e) {
       setMessage("Error while updating.")
@@ -170,7 +180,25 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
                   <td>
                     Default Distance
                   </td>
-                  <td><input type="text" name="defaultDistance" value={defaultDistance} onChange={e => setDefaultDistance(e.target.value)} className="col-12"/></td>
+                  <td><input type="text" name="defaultDistance" value={defaultDistance} onChange={e => setDefaultDistance(+e.target.value)} className="col-12"/></td>
+                </tr>
+                <tr>
+                  <td>
+                    Rewards
+                  </td>
+                  <td><input type="text" name="rewards" value={rewards} onChange={e => setRewards(+e.target.value)} className="col-12"/></td>
+                </tr>
+                <tr>
+                  <td>
+                    Carbon Saving
+                  </td>
+                  <td><input type="text" name="carbonSaving" value={carbonSaving} onChange={e => setCarbonSaving(+e.target.value)} className="col-12"/></td>
+                </tr>
+                <tr>
+                  <td>
+                    Total Miles
+                  </td>
+                  <td><input type="text" name="totalMiles" value={totalMiles} onChange={e => setTotalMiles(+e.target.value)} className="col-12"/></td>
                 </tr>
                 </tbody>
               </table>
@@ -212,4 +240,5 @@ interface MemberRow {
   rewards: number,
   organisation: string,
   scheme: string,
+  totalMiles: string
 }

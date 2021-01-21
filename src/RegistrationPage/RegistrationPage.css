@@ -6,7 +6,7 @@ body {
 }
 
 .bg-login-image {
-    background: url("/logo.png") no-repeat  left 100px top 80px !important;
+    background: url("../logo.png") no-repeat  left 100px top 80px !important;
 }
 
 .form-group select {
