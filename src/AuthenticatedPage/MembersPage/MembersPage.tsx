@@ -4,6 +4,7 @@ import { CreateMemberForm } from "./CreateMemberForm/CreateMemberForm";
 import { MembersTable } from "./MembersTable/MembersTable";
 import { GroupJsonView, HttpResponse, MemberJsonView } from "eco-rewards-hub";
 import { Row } from "../Table/Table";
+import { UpdateMembersForm } from "./UpdateMembersForm/UpdateMembersForm";
 
 export const MembersPage = ({api}: MembersPageProps) => {
   const [apiData, setApiData] = useState<ApiData>();
@@ -73,6 +74,9 @@ export const MembersPage = ({api}: MembersPageProps) => {
         groups={apiData ? apiData.groups.data : []}
         members={apiData ? apiData.members.data : []}
         links={apiData ? apiData.members.links : {}}/>
+      <UpdateMembersForm
+        api={api}
+        groups={apiData ? apiData.groups.data : []}/>
     </div>
   );
 };
