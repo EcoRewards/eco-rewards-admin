@@ -35,7 +35,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle] = useState(false);
   const filteredItems = rows.filter(item =>
-    (item.name && item.name.includes(filterText)) || 
+    (item.name && item.name.includes(filterText)) ||
     item.id === filterText || item.id.includes(filterText)
   );
   const subHeaderComponentMemo = useMemo(() => {
@@ -54,7 +54,8 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
             data={filteredItems}
             pagination
             paginationResetDefaultPage={resetPaginationToggle}
-            paginationPerPage={30}
+            paginationPerPage={50}
+            paginationRowsPerPageOptions={[10, 50, 100, 250]}
             subHeader
             subHeaderComponent={subHeaderComponentMemo}
             selectableRows

@@ -20,7 +20,8 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
   const columns = [{
     name: "Member ID",
     selector: "numeric_id",
-    sortable: true
+    sortable: true,
+    width: "180px"
   },{
     name: "Source",
     selector: "source",
@@ -31,6 +32,16 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
     selector: "deviceId",
     sortable: true,
     width: "110px"
+  },{
+    name: "Latitude",
+    selector: "latitude",
+    sortable: false,
+    width: "100px"
+  },{
+    name: "Longitude",
+    selector: "longitude",
+    sortable: false,
+    width: "100px"
   },{
     name: "Uploaded",
     selector: "uploaded",
@@ -60,12 +71,12 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
     name: "Rewards Earned",
     selector: "rewardsEarned",
     sortable: true,
-    width: "140px"
+    width: "80px"
   },{
     name: "Carbon Saving",
     selector: "carbonSaving",
     sortable: true,
-    width: "140px"
+    width: "80px"
   }];
 
   return (
