@@ -93,22 +93,22 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
   const [message, setMessage] = useState<string>();
   const [defaultTransportMode, setDefaultTransportMode] = useState<string>("");
   const [previousTransportMode, setPreviousTransportMode] = useState<string>("");
-  const [defaultDistance, setDefaultDistance] = useState<number>(0);
-  const [carbonSaving, setCarbonSaving] = useState<number>(0);
-  const [rewards, setRewards] = useState<number>(0);
-  const [totalMiles, setTotalMiles] = useState<number>(0);
+  const [defaultDistance, setDefaultDistance] = useState<string>("0");
+  const [carbonSaving, setCarbonSaving] = useState<string>("0");
+  const [rewards, setRewards] = useState<string>("0");
+  const [totalMiles, setTotalMiles] = useState<string>("0");
   const [group, setGroup] = useState<string>();
   const closeModal = () => {
     window.location.reload();
   };
   const onEdit = (m: MemberRow) => {
     setEditMember(m);
-    setDefaultDistance(+m.defaultDistance.replace(" miles", ""));
+    setDefaultDistance(m.defaultDistance.replace(" miles", ""));
     setDefaultTransportMode(m.defaultTransportMode);
     setPreviousTransportMode(m.previousTransportMode);
-    setCarbonSaving(+m.carbonSaving.replace("kg", ""));
-    setRewards(m.rewards);
-    setTotalMiles(+m.totalMiles.replace(" miles", ""));
+    setCarbonSaving(m.carbonSaving.replace("kg", ""));
+    setRewards(m.rewards + "");
+    setTotalMiles(m.totalMiles.replace(" miles", ""));
     setGroup(m.group);
   };
 
@@ -120,7 +120,15 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     }
 
     try {
-      const newProps = { group, defaultTransportMode, previousTransportMode, defaultDistance, totalMiles, rewards, carbonSaving };
+      const newProps = {
+        group: group,
+        defaultTransportMode: defaultTransportMode,
+        previousTransportMode: previousTransportMode,
+        defaultDistance: +defaultDistance,
+        totalMiles: +totalMiles,
+        rewards: +rewards,
+        carbonSaving: +carbonSaving
+      };
       await api.put(editMember.id, newProps);
 
       const member = members.find(m => m.id === editMember.id);
@@ -180,25 +188,25 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
                   <td>
                     Default Distance
                   </td>
-                  <td><input type="text" name="defaultDistance" value={defaultDistance} onChange={e => setDefaultDistance(+e.target.value)} className="col-12"/></td>
+                  <td><input type="text" name="defaultDistance" value={defaultDistance} onChange={e => setDefaultDistance(e.target.value)} className="col-12"/></td>
                 </tr>
                 <tr>
                   <td>
                     Rewards
                   </td>
-                  <td><input type="text" name="rewards" value={rewards} onChange={e => setRewards(+e.target.value)} className="col-12"/></td>
+                  <td><input type="text" name="rewards" value={rewards} onChange={e => setRewards(e.target.value)} className="col-12"/></td>
                 </tr>
                 <tr>
                   <td>
                     Carbon Saving
                   </td>
-                  <td><input type="text" name="carbonSaving" value={carbonSaving} onChange={e => setCarbonSaving(+e.target.value)} className="col-12"/></td>
+                  <td><input type="text" name="carbonSaving" value={carbonSaving} onChange={e => setCarbonSaving(e.target.value)} className="col-12"/></td>
                 </tr>
                 <tr>
                   <td>
                     Total Miles
                   </td>
-                  <td><input type="text" name="totalMiles" value={totalMiles} onChange={e => setTotalMiles(+e.target.value)} className="col-12"/></td>
+                  <td><input type="text" name="totalMiles" value={totalMiles} onChange={e => setTotalMiles(e.target.value)} className="col-12"/></td>
                 </tr>
                 </tbody>
               </table>
