@@ -1,7 +1,7 @@
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import React from "react";
 
-const colours = ["#ffc658", "#8884d8", "#82ca9d"];
+const colours = ["#4e73df", "#1cc88a", "#f6c23e", "#36b9cc",  "#e74a3b", "#858796"];
 
 export const DashboardChart = ({ title, names, data }: DashboardChartProps) => {
   const bars = names.map((name, i) => <Bar key={i} dataKey={name} fill={colours[i % colours.length]} />);

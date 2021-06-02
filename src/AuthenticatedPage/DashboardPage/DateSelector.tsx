@@ -5,6 +5,7 @@ export const DateSelector = ({ onChange }: DateSelectorProps) => {
   const today = LocalDate.now();
   const dates: Record<string, [LocalDate, LocalDate]> = {
     "Last 7 days": [today.minusDays(7), today],
+    "Last 14 days": [today.minusDays(14), today],
     "Last 30 days": [today.minusDays(30), today],
     "This month": [today.withDayOfMonth(1), today]
   };
