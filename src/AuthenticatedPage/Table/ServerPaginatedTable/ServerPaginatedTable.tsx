@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import styled from "styled-components";
-import "./Table.css";
+import "./ServerPaginatedTable.css";
 import { AxiosInstance } from "axios";
 
-export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }: TableProps<T>) => {
+export const ServerPaginatedTable = <T extends Row>({ rows, columns, removeRows, editRow, api }: TableProps<T>) => {
   const [selectedRows, setSelectedRows] = useState([] as T[]);
   const [toggleCleared, setToggleCleared] = useState(false);
 

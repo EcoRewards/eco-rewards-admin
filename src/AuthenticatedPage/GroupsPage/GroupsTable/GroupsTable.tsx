@@ -1,6 +1,6 @@
 import React from "react";
 import { toGroupId } from "eco-rewards-hub/dist/src/group/Group";
-import { Row, Table } from "../../Table/Table";
+import { Row, ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { GroupJsonView } from "eco-rewards-hub";
 
@@ -28,7 +28,7 @@ export const GroupsTable = ({ api, groups, links, removeGroups }: GroupsTablePro
   }];
 
   return (
-    <Table columns={columns} rows={rows} api={api} removeRows={removeGroups}/>
+    <ClientPaginatedTable columns={columns} rows={rows} api={api} removeRows={removeGroups}/>
   );
 };
 

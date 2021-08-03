@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "../../Table/Table";
+import { ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { DeviceStatusJsonView } from "eco-rewards-hub/dist/src/device/DeviceStatus";
 
@@ -29,7 +29,7 @@ export const DeviceStatusTable = ({ api, statuses }: DeviceStatusTableProps) => 
   }];
 
   return (
-    <Table columns={columns} rows={rows} api={api}/>
+    <ClientPaginatedTable columns={columns} rows={rows} api={api}/>
   );
 };
 

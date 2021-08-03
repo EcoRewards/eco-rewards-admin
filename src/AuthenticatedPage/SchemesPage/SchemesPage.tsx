@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import { CreateSchemeForm } from "./CreateSchemeForm/CreateSchemeForm";
 import { SchemesTable } from "./SchemesTable/SchemesTable";
 import { HttpResponse, SchemeJsonView } from "eco-rewards-hub";
-import { Row } from "../Table/Table";
+import { Row } from "../Table/ClientPaginatedTable/ClientPaginatedTable";
 
 export const SchemesPage = ({api}: SchemesPageProps) => {
   const [schemes, setSchemes] = useState<SchemeJsonView[]>();

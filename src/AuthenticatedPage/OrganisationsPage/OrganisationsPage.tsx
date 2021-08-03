@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import { CreateOrganisationForm } from "./CreateOrganisationForm/CreateOrganisationForm";
 import { OrganisationsTable } from "./OrganisationsTable/OrganisationsTable";
 import { HttpResponse, OrganisationJsonView, SchemeJsonView } from "eco-rewards-hub";
-import { Row } from "../Table/Table";
+import { Row } from "../Table/ClientPaginatedTable/ClientPaginatedTable";
 
 export const OrganisationsPage = ({api}: OrganisationsPageProps) => {
   const [apiData, setApiData] = useState<ApiData>();

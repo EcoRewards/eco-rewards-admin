@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import { CreateGroupForm } from "./CreateGroupForm/CreateGroupForm";
 import { GroupsTable } from "./GroupsTable/GroupsTable";
 import { HttpResponse, GroupJsonView, OrganisationJsonView } from "eco-rewards-hub";
-import { Row } from "../Table/Table";
+import { Row } from "../Table/ClientPaginatedTable/ClientPaginatedTable";
 
 export const GroupsPage = ({api}: GroupsPageProps) => {
   const [apiData, setApiData] = useState<ApiData>();
