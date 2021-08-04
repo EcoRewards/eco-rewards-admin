@@ -1,6 +1,5 @@
 import React from "react";
 import { toGroupId } from "eco-rewards-hub/dist/src/group/Group";
-import { Row, ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { GroupJsonView, SchemeJsonView } from "eco-rewards-hub";
 import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPaginatedTable";
