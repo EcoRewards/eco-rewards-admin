@@ -7,6 +7,9 @@ import { AxiosInstance } from "axios";
 export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, editRow, api, filterField }: TableProps<T>) => {
   const [selectedRows, setSelectedRows] = useState([] as T[]);
   const [toggleCleared, setToggleCleared] = useState(false);
+  const [data, setData] = useState([] as T[]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(50);
 
   const handleRowSelected = useCallback(state => {
     setSelectedRows(state.selectedRows);
@@ -30,28 +33,24 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
       : null;
 
     return <>{editButton} {deleteButton}</>;
-  }, [selectedRows, toggleCleared, api, editRow]);
+  }, [selectedRows, toggleCleared, api, editRow, data]);
 
-  const [filterText, setFilterText] = useState('');
-  const onFilterChange = (e: any) => {
-    setFilterText(e.target.value);
-    fetchData(1, perPage, e.target.value);
-  }
-
-  const subHeaderComponentMemo = useMemo(() => {
-    return <FilterComponent onFilter={onFilterChange} filterText={filterText} />;
-  }, [filterText]);
-
-  const [data, setData] = useState([] as T[]);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(50);
-
-  const fetchData = async (page: number, quantity: number, filter: string) => {
+  const fetchData = useCallback(async (page: number, quantity: number, filter: string) => {
     const response = await api.get(`${uri}?page=${page}&quantity=${quantity}&filterText=${filter}&filterField=${filterField}`);
 
     setData(response.data.data.map((item: unknown) => createRow(item, response.data.links)));
     setTotalRows(response.data.pagination.count);
-  };
+  }, [api, createRow, filterField, uri]);
+
+  const [filterText, setFilterText] = useState('');
+  const onFilterChange = useCallback((e: any) => {
+    setFilterText(e.target.value);
+    fetchData(1, perPage, e.target.value);
+  }, [perPage, setFilterText, fetchData]);
+
+  const subHeaderComponentMemo = useMemo(() => {
+    return <FilterComponent onFilter={onFilterChange} filterText={filterText} />;
+  }, [filterText, onFilterChange]);
 
   const handleChangePage = async (page: number) => {
     fetchData(page, perPage, filterText);
@@ -64,7 +63,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
 
   useEffect(() => {
     fetchData(1, perPage, filterText);
-  }, [perPage, filterText]);
+  }, [perPage, filterText, fetchData]);
 
   return (
     <div className="card shadow mb-4">
