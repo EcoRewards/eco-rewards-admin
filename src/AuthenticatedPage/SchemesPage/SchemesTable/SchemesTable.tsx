@@ -1,6 +1,6 @@
 import React from "react";
 import { toSchemeId } from "eco-rewards-hub/dist/src/scheme/Scheme";
-import { Row, Table } from "../../Table/Table";
+import { Row, ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { SchemeJsonView } from "eco-rewards-hub";
 
@@ -23,7 +23,7 @@ export const SchemesTable = ({ api, schemes, removeSchemes }: SchemesTableProps)
   }];
 
   return (
-    <Table columns={columns} rows={rows} removeRows={removeSchemes} api={api}/>
+    <ClientPaginatedTable columns={columns} rows={rows} removeRows={removeSchemes} api={api}/>
   );
 };
 

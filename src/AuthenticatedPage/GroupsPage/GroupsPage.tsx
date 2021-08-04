@@ -2,40 +2,25 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { CreateGroupForm } from "./CreateGroupForm/CreateGroupForm";
 import { GroupsTable } from "./GroupsTable/GroupsTable";
-import { HttpResponse, GroupJsonView, OrganisationJsonView } from "eco-rewards-hub";
-import { Row } from "../Table/Table";
+import { OrganisationJsonView } from "eco-rewards-hub";
 
 export const GroupsPage = ({api}: GroupsPageProps) => {
-  const [apiData, setApiData] = useState<ApiData>();
+  const [organisations, setOrganisations] = useState<OrganisationJsonView[]>();
 
   useEffect(() => {
     async function fetchApiData() {
-      const [groups, organisations] = await Promise.all([
-        api.get("/groups").then(r => r.data),
-        api.get("/organisations").then(r => r.data)
-      ]);
+      const organisations = await api.get("/organisations").then(r => r.data.data);
 
-      setApiData({ groups, organisations });
+      setOrganisations(organisations);
     }
 
-    if (!apiData) {
+    if (!organisations) {
       fetchApiData();
     }
-  }, [api, apiData]);
+  }, [api, organisations]);
 
-  const addGroup = (response: HttpResponse<GroupJsonView>) => {
-    if (apiData) {
-      apiData.groups.data.push(response.data);
-      apiData.groups.links = { ...response.links, ...apiData.groups.links };
-      setApiData({ ...apiData });
-    }
-  };
-
-  const removeGroups = (removed: Row[]) => {
-    if (apiData) {
-      apiData.groups.data = apiData.groups.data.filter(r1 => !removed.some(r2 => r1.id === r2.id));
-      setApiData({ ...apiData });
-    }
+  const addGroup = () => {
+    window.location.reload();
   };
 
   return (
@@ -45,26 +30,12 @@ export const GroupsPage = ({api}: GroupsPageProps) => {
       <CreateGroupForm
         api={api}
         addGroup={addGroup}
-        organisations={apiData ? apiData.organisations.data : []}/>
-      <GroupsTable
-        api={api}
-        removeGroups={removeGroups}
-        groups={apiData ? apiData.groups.data : []}
-        links={apiData ? apiData.groups.links : {}}/>
+        organisations={organisations ? organisations : []}/>
+      <GroupsTable api={api}/>
     </div>
   );
 };
 
 interface GroupsPageProps {
   api: AxiosInstance
-}
-
-interface ApiData {
-  groups: {
-    data: GroupJsonView[],
-    links: Record<string, any>
-  },
-  organisations: {
-    data: OrganisationJsonView[]
-  }
 }

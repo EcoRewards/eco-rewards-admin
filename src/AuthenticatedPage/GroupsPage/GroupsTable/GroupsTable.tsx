@@ -1,16 +1,16 @@
 import React from "react";
 import { toGroupId } from "eco-rewards-hub/dist/src/group/Group";
-import { Row, Table } from "../../Table/Table";
 import { AxiosInstance } from "axios";
-import { GroupJsonView } from "eco-rewards-hub";
+import { GroupJsonView, SchemeJsonView } from "eco-rewards-hub";
+import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPaginatedTable";
 
-export const GroupsTable = ({ api, groups, links, removeGroups }: GroupsTableProps) => {
-  const rows = groups.map(o => ({
+export const GroupsTable = ({ api }: GroupsTableProps) => {
+  const createRow = (o: GroupJsonView, links: Record<string, SchemeJsonView>) => ({
     id: o.id!,
     numeric_id: toGroupId(o.id!),
     name: o.name,
     organisation: links[o.organisation].name
-  }));
+  });
 
   const columns = [{
     name: "ID",
@@ -28,13 +28,10 @@ export const GroupsTable = ({ api, groups, links, removeGroups }: GroupsTablePro
   }];
 
   return (
-    <Table columns={columns} rows={rows} api={api} removeRows={removeGroups}/>
+    <ServerPaginatedTable columns={columns} uri={"/groups"} api={api} createRow={createRow} filterField={"name"}/>
   );
 };
 
 interface GroupsTableProps {
-  api: AxiosInstance,
-  groups: GroupJsonView[],
-  links: Record<string, any>,
-  removeGroups: (groups: Row[]) => any
+  api: AxiosInstance
 }

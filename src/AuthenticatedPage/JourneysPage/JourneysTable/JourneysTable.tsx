@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "../../Table/Table";
+import { ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { JourneyJsonView } from "eco-rewards-hub";
 
@@ -80,7 +80,7 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
   }];
 
   return (
-    <Table columns={columns} rows={rows} api={api}/>
+    <ClientPaginatedTable columns={columns} rows={rows} api={api}/>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import { Row, Table } from "../../Table/Table";
+import { Row, ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { GroupJsonView, MemberJsonView } from "eco-rewards-hub";
 import Modal from "react-modal";
@@ -142,7 +142,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
 
   return (
     <>
-      <Table columns={columns} rows={rows} api={api} removeRows={removeMembers} editRow={onEdit}/>
+      <ClientPaginatedTable columns={columns} rows={rows} api={api} removeRows={removeMembers} editRow={onEdit}/>
       <Modal
         style={customStyles}
         isOpen={!!editMember}

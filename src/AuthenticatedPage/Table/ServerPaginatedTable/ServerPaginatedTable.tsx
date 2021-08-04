@@ -1,12 +1,15 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import styled from "styled-components";
-import "./Table.css";
+import "./ServerPaginatedTable.css";
 import { AxiosInstance } from "axios";
 
-export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }: TableProps<T>) => {
+export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, editRow, api, filterField }: TableProps<T>) => {
   const [selectedRows, setSelectedRows] = useState([] as T[]);
   const [toggleCleared, setToggleCleared] = useState(false);
+  const [data, setData] = useState([] as T[]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(50);
 
   const handleRowSelected = useCallback(state => {
     setSelectedRows(state.selectedRows);
@@ -20,7 +23,7 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
 
         await Promise.all(selectedRows.map(r => api.delete(r.id)));
 
-        removeRows!(selectedRows);
+        setData(data.filter(r1 => !selectedRows.some(r2 => r1.id === r2.id)));
       }
     };
 
@@ -30,17 +33,37 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
       : null;
 
     return <>{editButton} {deleteButton}</>;
-  }, [selectedRows, toggleCleared, api, removeRows, editRow]);
+  }, [selectedRows, toggleCleared, api, editRow, data]);
+
+  const fetchData = useCallback(async (page: number, quantity: number, filter: string) => {
+    const response = await api.get(`${uri}?page=${page}&quantity=${quantity}&filterText=${filter}&filterField=${filterField}`);
+
+    setData(response.data.data.map((item: unknown) => createRow(item, response.data.links)));
+    setTotalRows(response.data.pagination.count);
+  }, [api, createRow, filterField, uri]);
 
   const [filterText, setFilterText] = useState('');
-  const [resetPaginationToggle] = useState(false);
-  const filteredItems = rows.filter(item =>
-    (item.name && item.name.includes(filterText)) ||
-    item.id === filterText || item.id.includes(filterText)
-  );
+  const onFilterChange = useCallback((e: any) => {
+    setFilterText(e.target.value);
+    fetchData(1, perPage, e.target.value);
+  }, [perPage, setFilterText, fetchData]);
+
   const subHeaderComponentMemo = useMemo(() => {
-    return <FilterComponent onFilter={(e: any) => setFilterText(e.target.value)} filterText={filterText} />;
-  }, [filterText]);
+    return <FilterComponent onFilter={onFilterChange} filterText={filterText} />;
+  }, [filterText, onFilterChange]);
+
+  const handleChangePage = async (page: number) => {
+    fetchData(page, perPage, filterText);
+  };
+
+  const handlePerRowsChange = async (newPerPage: number, page: number) => {
+    setPerPage(50);
+    fetchData(page, newPerPage, filterText);
+  };
+
+  useEffect(() => {
+    fetchData(1, perPage, filterText);
+  }, [perPage, filterText, fetchData]);
 
   return (
     <div className="card shadow mb-4">
@@ -51,16 +74,19 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
         <div className="table-responsive">
           <DataTable
             columns={columns}
-            data={filteredItems}
+            data={data}
             pagination
-            paginationResetDefaultPage={resetPaginationToggle}
+            paginationServer
             paginationPerPage={50}
             paginationRowsPerPageOptions={[10, 50, 100, 250]}
+            paginationTotalRows={totalRows}
             subHeader
             subHeaderComponent={subHeaderComponentMemo}
             selectableRows
-            contextActions={removeRows ? contextActions : undefined}
+            contextActions={contextActions}
             onSelectedRowsChange={handleRowSelected}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handleChangePage}
             clearSelectedRows={toggleCleared}
           />
         </div>
@@ -70,10 +96,11 @@ export const Table = <T extends Row>({ rows, columns, removeRows, editRow, api }
 };
 
 interface TableProps<T extends Row> {
-  rows: T[],
+  uri: string,
   columns: IDataTableColumn<T>[],
-  removeRows?: (rows: Row[]) => any,
   editRow?: (row: T) => any,
+  createRow: (row: any, links: any) => T,
+  filterField: string,
   api: AxiosInstance
 }
 

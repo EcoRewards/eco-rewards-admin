@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import { CreateMemberForm } from "./CreateMemberForm/CreateMemberForm";
 import { MembersTable } from "./MembersTable/MembersTable";
 import { GroupJsonView, HttpResponse, MemberJsonView } from "eco-rewards-hub";
-import { Row } from "../Table/Table";
+import { Row } from "../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { UpdateMembersForm } from "./UpdateMembersForm/UpdateMembersForm";
 
 export const MembersPage = ({api}: MembersPageProps) => {
