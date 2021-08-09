@@ -1,16 +1,17 @@
 import React from "react";
-import { ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { DeviceStatusJsonView } from "eco-rewards-hub/dist/src/device/DeviceStatus";
+import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPaginatedTable";
 
-export const DeviceStatusTable = ({ api, statuses }: DeviceStatusTableProps) => {
-  const rows = statuses.map((o,i) => ({
-    id: i + "",
+export const DeviceStatusTable = ({ api }: DeviceStatusTableProps) => {
+  let i = 0;
+  const createRow = (o: DeviceStatusJsonView) => ({
+    id: i++ + "",
     name: o.deviceId,
     numeric_id: o.deviceId,
     received: new Date(o.received + "+0000").toLocaleString(),
     status: o.status
-  }));
+  });
 
   const columns = [{
     name: "Device ID",
@@ -29,11 +30,10 @@ export const DeviceStatusTable = ({ api, statuses }: DeviceStatusTableProps) => 
   }];
 
   return (
-    <ClientPaginatedTable columns={columns} rows={rows} api={api}/>
+    <ServerPaginatedTable columns={columns} uri={"/devices"} api={api} createRow={createRow} filterField={"device_id"}/>
   );
 };
 
 interface DeviceStatusTableProps {
-  api: AxiosInstance,
-  statuses: DeviceStatusJsonView[]
+  api: AxiosInstance
 }
