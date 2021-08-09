@@ -110,7 +110,7 @@ export interface Row {
 }
 
 const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
-  <TextField id="search" type="text" placeholder="Filter By Name" value={filterText} onChange={onFilter} />
+  <TextField id="search" type="text" placeholder="Filter" value={filterText} onChange={onFilter} />
 );
 
 const TextField = styled.input`

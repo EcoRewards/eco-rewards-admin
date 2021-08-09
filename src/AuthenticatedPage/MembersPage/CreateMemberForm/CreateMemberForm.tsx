@@ -26,7 +26,7 @@ export const CreateMemberForm = ({ api, addMembers, groups }: CreateMemberFormPr
     }
   };
 
-  const canSubmit = group.length > 2 && +quantity > 0;
+  const canSubmit = group.length > 2 && defaultTransportMode.length > 2 && +quantity > 0;
 
   return (
     <div className="card shadow mb-4">

@@ -11,7 +11,7 @@ import Cookies from "universal-cookie";
 
 export const App = () => {
   const api = Axios.create({ baseURL: "https://api.ecorewards.co.uk" });
-//  const api = Axios.create({ baseURL: "http://localhost:8080" });
+  // const api = Axios.create({ baseURL: "http://localhost:8080" });
   const cookies = new Cookies();
   const auth = new Authentication(api, cookies);
 
