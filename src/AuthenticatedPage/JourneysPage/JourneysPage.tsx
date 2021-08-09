@@ -1,27 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AxiosInstance } from "axios";
 import { CreateJourneyForm } from "./CreateJourneyForm/CreateJourneyForm";
 import { JourneysTable } from "./JourneysTable/JourneysTable";
-import { JourneyJsonView } from "eco-rewards-hub";
 
 export const JourneysPage = ({api}: JourneysPageProps) => {
-  const [apiData, setApiData] = useState<ApiData>();
-
-  useEffect(() => {
-    async function fetchApiData() {
-      const journeys = await api.get("/journeys").then(r => r.data);
-
-      setApiData({ journeys });
-    }
-
-    if (!apiData) {
-      fetchApiData();
-    }
-  }, [api, apiData]);
 
   const addJourneys = () => {
-    setApiData(undefined);
-  };
+    window.location.reload();
+  }
 
   const onExportJourneys = async () => {
     const response = await api.get("/journeys", { headers: { "Accept": "text/csv"} });
@@ -48,12 +34,8 @@ export const JourneysPage = ({api}: JourneysPageProps) => {
           <p><button className="btn btn-primary" onClick={onExportJourneys}>Export</button> </p>
         </div>
       </div>
-      <CreateJourneyForm
-        api={api}
-        onJourneysUploaded={addJourneys}/>
-      <JourneysTable
-        api={api}
-        journeys={apiData ? apiData.journeys.data : []}/>
+      <CreateJourneyForm api={api} onJourneysUploaded={addJourneys}/>
+      <JourneysTable api={api}/>
     </div>
   );
 };
@@ -62,8 +44,3 @@ interface JourneysPageProps {
   api: AxiosInstance
 }
 
-interface ApiData {
-  journeys: {
-    data: JourneyJsonView[]
-  }
-}

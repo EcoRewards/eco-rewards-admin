@@ -1,21 +1,22 @@
 import React from "react";
-import { ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { JourneyJsonView } from "eco-rewards-hub";
+import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPaginatedTable";
 
-export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
-  const rows = journeys.map((o, i) => ({
-    ...o,
-    name: o.memberId.substr(8),
-    id: o.memberId.substr(8) + "_" + i,
-    numeric_id: o.memberId.substr(8),
-    uploaded: new Date(o.uploaded + "+0000").toLocaleString(),
-    travelDate: new Date(o.travelDate + "+0000").toLocaleString(),
-    processed: o.processed === null ? "Pending" : new Date(o.processed +"+0000").toLocaleString(),
-    carbonSaving: o.carbonSaving === null ? "-" : o.carbonSaving + "kg",
-    distance: o.distance === null ? "-" : o.distance + " miles",
-    rewardsEarned: o.rewardsEarned === null ? "-" : o.rewardsEarned
-  }));
+export const JourneysTable = ({ api }: JourneysTableProps) => {
+  let i = 0;
+  const createRow = (j: JourneyJsonView) => ({
+    ...j,
+    name: j.memberId.substr(8),
+    id: j.memberId.substr(8) + "_" + i++,
+    numeric_id: j.memberId.substr(8),
+    uploaded: new Date(j.uploaded + "+0000").toLocaleString(),
+    travelDate: new Date(j.travelDate + "+0000").toLocaleString(),
+    processed: j.processed === null ? "Pending" : new Date(j.processed +"+0000").toLocaleString(),
+    carbonSaving: j.carbonSaving === null ? "-" : j.carbonSaving + "kg",
+    distance: j.distance === null ? "-" : j.distance + " miles",
+    rewardsEarned: j.rewardsEarned === null ? "-" : j.rewardsEarned
+  });
 
   const columns = [{
     name: "Member ID",
@@ -80,11 +81,10 @@ export const JourneysTable = ({ api, journeys }: JourneysTableProps) => {
   }];
 
   return (
-    <ClientPaginatedTable columns={columns} rows={rows} api={api}/>
+    <ServerPaginatedTable columns={columns} uri={"/journeys"} createRow={createRow} api={api} filterField={"smartcard"}/>
   );
 };
 
 interface JourneysTableProps {
-  api: AxiosInstance,
-  journeys: JourneyJsonView[]
+  api: AxiosInstance
 }
