@@ -29,7 +29,7 @@ export const JourneysPage = ({api}: JourneysPageProps) => {
     a.style.display = "none";
     document.body.appendChild(a);
     a.href = window.URL.createObjectURL(new Blob([response.data], { type: "text/csv" }));
-    a.setAttribute("download", "members.csv");
+    a.setAttribute("download", "journeys.csv");
     a.click();
     window.URL.revokeObjectURL(a.href);
     document.body.removeChild(a);

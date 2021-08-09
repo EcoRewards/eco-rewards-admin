@@ -2,41 +2,26 @@ import React, { useEffect, useState } from "react";
 import { AxiosInstance } from "axios";
 import { CreateMemberForm } from "./CreateMemberForm/CreateMemberForm";
 import { MembersTable } from "./MembersTable/MembersTable";
-import { GroupJsonView, HttpResponse, MemberJsonView } from "eco-rewards-hub";
-import { Row } from "../Table/ClientPaginatedTable/ClientPaginatedTable";
+import { GroupJsonView } from "eco-rewards-hub";
 import { UpdateMembersForm } from "./UpdateMembersForm/UpdateMembersForm";
 
 export const MembersPage = ({api}: MembersPageProps) => {
-  const [apiData, setApiData] = useState<ApiData>();
+  const [groups, setGroups] = useState<GroupData>();
 
   useEffect(() => {
     async function fetchApiData() {
-      const [members, groups] = await Promise.all([
-        api.get("/members").then(r => r.data),
-        api.get("/groups").then(r => r.data)
-      ]);
+      const groups = await api.get("/groups").then(r => r.data);
 
-      setApiData({ members, groups });
+      setGroups(groups);
     }
 
-    if (!apiData) {
+    if (!groups) {
       fetchApiData();
     }
-  }, [api, apiData]);
+  }, [api, groups]);
 
-  const addMembers = (response: HttpResponse<MemberJsonView>) => {
-    if (apiData) {
-      apiData.members.data = apiData.members.data.concat(response.data);
-      apiData.members.links = { ...response.links, ...apiData.members.links };
-      setApiData({ ...apiData });
-    }
-  };
-
-  const removeMembers = (removed: Row[]) => {
-    if (apiData) {
-      apiData.members.data = apiData.members.data.filter(r1 => !removed.some(r2 => r1.id === r2.id));
-      setApiData({ ...apiData });
-    }
+  const addMembers = () => {
+    window.location.reload();
   };
 
   const onExportMembers = async () => {
@@ -64,19 +49,9 @@ export const MembersPage = ({api}: MembersPageProps) => {
           <p><button className="btn btn-primary" onClick={onExportMembers}>Export</button> </p>
         </div>
       </div>
-      <CreateMemberForm
-        api={api}
-        addMembers={addMembers}
-        groups={apiData ? apiData.groups.data : []}/>
-      <MembersTable
-        api={api}
-        removeMembers={removeMembers}
-        groups={apiData ? apiData.groups.data : []}
-        members={apiData ? apiData.members.data : []}
-        links={apiData ? apiData.members.links : {}}/>
-      <UpdateMembersForm
-        api={api}
-        groups={apiData ? apiData.groups.data : []}/>
+      <CreateMemberForm api={api} addMembers={addMembers} groups={groups ? groups.data : []}/>
+      <MembersTable api={api} groups={groups ? groups.data : []}/>
+      <UpdateMembersForm api={api} groups={groups ? groups.data : []}/>
     </div>
   );
 };
@@ -85,13 +60,7 @@ interface MembersPageProps {
   api: AxiosInstance
 }
 
-interface ApiData {
-  members: {
-    data: MemberJsonView[],
-    links: Record<string, any>
-  },
-  groups: {
-    data: GroupJsonView[],
-    links: Record<string, any>
-  }
+interface GroupData {
+  data: GroupJsonView[],
+  links: Record<string, any>
 }

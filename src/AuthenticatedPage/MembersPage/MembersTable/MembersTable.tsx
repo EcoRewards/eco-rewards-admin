@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from "react";
-import { Row, ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { GroupJsonView, MemberJsonView } from "eco-rewards-hub";
 import Modal from "react-modal";
 import { TransportModeList } from "../../../TransportModeList/TransportModeList";
+import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPaginatedTable";
 
 Modal.setAppElement('#root');
 
@@ -24,8 +24,8 @@ const customStyles = {
   }
 };
 
-export const MembersTable = ({ api, members, links, removeMembers, groups }: MembersTableProps) => {
-  const rows: MemberRow[] = members.map(m => ({
+export const MembersTable = ({ api, groups }: MembersTableProps) => {
+  const createRow = (m: MemberJsonView, links: Record<string, any>): MemberRow => ({
     id: m.id!,
     numeric_id: m.id!.substr(8),
     name: links[m.group].name,
@@ -38,56 +38,58 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
     rewards: m.rewards,
     organisation: links[links[m.group].organisation].name,
     scheme: links[links[links[m.group].organisation].scheme].name
-  }));
+  });
 
-  const columns = [{
-    name: "ID",
-    selector: "numeric_id",
-    sortable: true,
-    width: "175px"
-  },{
-    name: "Scheme",
-    selector: "scheme",
-    sortable: true
-  },{
-    name: "Organisation",
-    selector: "organisation",
-    sortable: true
-  },{
-    name: "Group",
-    selector: "name",
-    sortable: true
-  },{
-    name: "Default Mode",
-    selector: "defaultTransportMode",
-    sortable: false,
-    width: "140px"
-  },{
-    name: "Previous Mode",
-    selector: "previousTransportMode",
-    sortable: false,
-    width: "140px"
-  },{
-    name: "Default Distance",
-    selector: "defaultDistance",
-    sortable: true,
-    width: "130px"
-  },{
-    name: "Rewards",
-    selector: "rewards",
-    sortable: true,
-    width: "90px"
-  },{
-    name: "Carbon Saving",
-    selector: "carbonSaving",
-    sortable: true,
-    width: "130px"
-  },{
-    name: "Total Miles",
-    selector: "totalMiles",
-    sortable: true,
-    width: "130px"
-  }];
+  const columns = [
+    {
+      name: "ID",
+      selector: "numeric_id",
+      sortable: true,
+      width: "175px"
+    },{
+      name: "Scheme",
+      selector: "scheme",
+      sortable: true
+    },{
+      name: "Organisation",
+      selector: "organisation",
+      sortable: true
+    },{
+      name: "Group",
+      selector: "name",
+      sortable: true
+    },{
+      name: "Default Mode",
+      selector: "defaultTransportMode",
+      sortable: false,
+      width: "140px"
+    },{
+      name: "Previous Mode",
+      selector: "previousTransportMode",
+      sortable: false,
+      width: "140px"
+    },{
+      name: "Default Distance",
+      selector: "defaultDistance",
+      sortable: true,
+      width: "130px"
+    },{
+      name: "Rewards",
+      selector: "rewards",
+      sortable: true,
+      width: "90px"
+    },{
+      name: "Carbon Saving",
+      selector: "carbonSaving",
+      sortable: true,
+      width: "130px"
+    },{
+      name: "Total Miles",
+      selector: "totalMiles",
+      sortable: true,
+      width: "130px"
+    }
+  ];
 
   const [editMember, setEditMember] = useState<MemberRow>();
   const [message, setMessage] = useState<string>();
@@ -131,9 +133,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
       };
       await api.put(editMember.id, newProps);
 
-      const member = members.find(m => m.id === editMember.id);
-      Object.assign(member, newProps);
-      setEditMember(undefined);
+      window.location.reload();
     }
     catch (e) {
       setMessage("Error while updating.")
@@ -142,7 +142,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
 
   return (
     <>
-      <ClientPaginatedTable columns={columns} rows={rows} api={api} removeRows={removeMembers} editRow={onEdit}/>
+      <ServerPaginatedTable columns={columns} uri={"/members"} api={api} editRow={onEdit} createRow={createRow} filterField={"smartcard"}/>
       <Modal
         style={customStyles}
         isOpen={!!editMember}
@@ -230,10 +230,7 @@ export const MembersTable = ({ api, members, links, removeMembers, groups }: Mem
 
 interface MembersTableProps {
   api: AxiosInstance,
-  members: MemberJsonView[],
-  links: Record<string, any>,
-  groups: GroupJsonView[],
-  removeMembers: (members: Row[]) => any
+  groups: GroupJsonView[]
 }
 
 interface MemberRow {
