@@ -11,6 +11,7 @@ import { GroupsPage } from './GroupsPage/GroupsPage';
 import { MembersPage } from "./MembersPage/MembersPage";
 import { JourneysPage } from "./JourneysPage/JourneysPage";
 import {DeviceStatusPage} from "./DeviceStatusPage/DeviceStatusPage";
+import { DeviceOverviewPage } from "./DeviceOverviewPage/DeviceOverviewPage";
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
   return (
@@ -38,6 +39,9 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
               </Route>
               <Route path="/devices">
                 <DeviceStatusPage api={auth.getAuthenticatedApi()} />
+              </Route>
+              <Route path="/device-overview">
+                <DeviceOverviewPage api={auth.getAuthenticatedApi()} />
               </Route>
               <Route path="/">
                 <DashboardPage api={auth.getAuthenticatedApi()} />

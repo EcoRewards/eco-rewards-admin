@@ -39,7 +39,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
     const response = await api.get(`${uri}?page=${page}&quantity=${quantity}&filterText=${filter}&filterField=${filterField}`);
 
     setData(response.data.data.map((item: unknown) => createRow(item, response.data.links)));
-    setTotalRows(response.data.pagination.count);
+    setTotalRows(response.data.pagination?.count || response.data.data.length);
   }, [api, createRow, filterField, uri]);
 
   const [filterText, setFilterText] = useState('');
