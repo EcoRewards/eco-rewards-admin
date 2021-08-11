@@ -80,8 +80,8 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
             paginationPerPage={50}
             paginationRowsPerPageOptions={[10, 50, 100, 250]}
             paginationTotalRows={totalRows}
-            subHeader
-            subHeaderComponent={subHeaderComponentMemo}
+            subHeader={!!filterField}
+            subHeaderComponent={filterField && subHeaderComponentMemo}
             selectableRows
             contextActions={contextActions}
             onSelectedRowsChange={handleRowSelected}
@@ -100,7 +100,7 @@ interface TableProps<T extends Row> {
   columns: IDataTableColumn<T>[],
   editRow?: (row: T) => any,
   createRow: (row: any, links: any) => T,
-  filterField: string,
+  filterField?: string,
   api: AxiosInstance
 }
 

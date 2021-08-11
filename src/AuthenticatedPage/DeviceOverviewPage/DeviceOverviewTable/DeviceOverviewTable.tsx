@@ -29,7 +29,7 @@ export const DeviceOverviewTable = ({ api }: DeviceStatusTableProps) => {
   }];
 
   return (
-    <ServerPaginatedTable columns={columns} uri={"/device-overview"} api={api} createRow={createRow} filterField={"device_id"}/>
+    <ServerPaginatedTable columns={columns} uri={"/device-overview"} api={api} createRow={createRow}/>
   );
 };
 
