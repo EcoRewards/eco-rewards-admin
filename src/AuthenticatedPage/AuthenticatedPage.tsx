@@ -14,38 +14,48 @@ import {DeviceStatusPage} from "./DeviceStatusPage/DeviceStatusPage";
 import { DeviceOverviewPage } from "./DeviceOverviewPage/DeviceOverviewPage";
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
+  const protectedRoutes = <>
+    <Route path="/schemes">
+      <SchemesPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/organisations">
+      <OrganisationsPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/groups">
+      <GroupsPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/members">
+      <MembersPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/journeys">
+      <JourneysPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/devices">
+      <DeviceStatusPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/device-overview">
+      <DeviceOverviewPage api={auth.getAuthenticatedApi()} />
+    </Route>
+    <Route path="/">
+      <DashboardPage api={auth.getAuthenticatedApi()} />
+    </Route>
+  </>;
+
+  const nonAdminDashboard = <>
+    <Route path="/">
+      <DeviceOverviewPage api={auth.getAuthenticatedApi()} />
+    </Route>
+  </>;
+
   return (
     <div id="wrapper">
-      <SideNavigation/>
+      <SideNavigation isAdmin={auth.isAdmin}/>
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <TopBar auth={auth}/>
           <HashRouter>
             <Switch>
-              <Route path="/schemes">
-                <SchemesPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/organisations">
-                <OrganisationsPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/groups">
-                <GroupsPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/members">
-                <MembersPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/journeys">
-                <JourneysPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/devices">
-                <DeviceStatusPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/device-overview">
-                <DeviceOverviewPage api={auth.getAuthenticatedApi()} />
-              </Route>
-              <Route path="/">
-                <DashboardPage api={auth.getAuthenticatedApi()} />
-              </Route>
+              { auth.isAdmin ? protectedRoutes : nonAdminDashboard }
             </Switch>
           </HashRouter>
         </div>

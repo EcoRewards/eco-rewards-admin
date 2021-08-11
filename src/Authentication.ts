@@ -21,6 +21,10 @@ export class Authentication {
     return this.cookies.get("auth") && this.cookies.get("auth").token !== undefined;
   }
 
+  public get isAdmin(): boolean {
+    return this.cookies.get("auth") && (this.getRole() === undefined || this.getRole() === "admin");
+  }
+
   public async login(username: string, password: string): Promise<void> {
     try {
       const response = await this.api.post("/login", { username, password });
@@ -40,6 +44,10 @@ export class Authentication {
   }
 
   public getName() {
-    return this.cookies.get("name");
+    return this.cookies.get("auth").name;
+  }
+
+  public getRole() {
+    return this.cookies.get("auth").role;
   }
 }
