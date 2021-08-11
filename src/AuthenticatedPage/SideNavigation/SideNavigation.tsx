@@ -66,12 +66,12 @@ export const SideNavigation = () => {
 
       <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/devices">
-          <i className="fas fa-fw fa-bus"></i>
-          <span>Device Status</span></NavLink>
+          <i className="fas fa-fw fa-pager"></i>
+          <span>Device Status Updates</span></NavLink>
       </li>
       <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/device-overview">
-          <i className="fas fa-fw fa-bus"></i>
+          <i className="fas fa-fw fa-list-alt"></i>
           <span>Device Overview</span></NavLink>
       </li>
     </ul>
