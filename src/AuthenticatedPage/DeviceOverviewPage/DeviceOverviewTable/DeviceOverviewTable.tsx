@@ -8,7 +8,7 @@ export const DeviceOverviewTable = ({ api }: DeviceStatusTableProps) => {
     id: i++ + "",
     name: o.deviceId,
     numeric_id: o.deviceId,
-    received: new Date(o.lastUpdate + "+0000").toLocaleString(),
+    received: o.lastUpdate,
     status: o.status
   });
 
@@ -21,7 +21,8 @@ export const DeviceOverviewTable = ({ api }: DeviceStatusTableProps) => {
     name: "Last Update",
     selector: "received",
     sortable: true,
-    width: "180px"
+    width: "180px",
+    cell: (row: any) => new Date(row.received + "+0000").toLocaleString()
   },{
     name: "Status",
     selector: "status",
