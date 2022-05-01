@@ -8,7 +8,7 @@ export const ClientPaginatedTable = <T extends Row>({ rows, columns, removeRows,
   const [selectedRows, setSelectedRows] = useState([] as T[]);
   const [toggleCleared, setToggleCleared] = useState(false);
 
-  const handleRowSelected = useCallback(state => {
+  const handleRowSelected = useCallback((state: { selectedRows: T[] }) => {
     setSelectedRows(state.selectedRows);
   }, []);
 

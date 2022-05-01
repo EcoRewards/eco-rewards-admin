@@ -11,7 +11,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(50);
 
-  const handleRowSelected = useCallback(state => {
+  const handleRowSelected = useCallback((state: { selectedRows: T[] }) => {
     setSelectedRows(state.selectedRows);
   }, []);
 
