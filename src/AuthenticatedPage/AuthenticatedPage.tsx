@@ -14,7 +14,7 @@ import {DeviceStatusPage} from "./DeviceStatusPage/DeviceStatusPage";
 import { DeviceOverviewPage } from "./DeviceOverviewPage/DeviceOverviewPage";
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
-  const protectedRoutes = <>
+  const protectedRoutes = <Switch>
     <Route path="/schemes">
       <SchemesPage api={auth.getAuthenticatedApi()} />
     </Route>
@@ -39,7 +39,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
     <Route path="/">
       <DashboardPage api={auth.getAuthenticatedApi()} />
     </Route>
-  </>;
+  </Switch>;
 
   const nonAdminDashboard = <>
     <Route path="/">
