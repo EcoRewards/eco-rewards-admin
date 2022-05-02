@@ -4,12 +4,12 @@ import styled from "styled-components";
 import "./ServerPaginatedTable.css";
 import { AxiosInstance } from "axios";
 
-export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, editRow, api, filterField }: TableProps<T>) => {
+export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, editRow, api, filterField, defaultSortField }: TableProps<T>) => {
   const [selectedRows, setSelectedRows] = useState([] as T[]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [data, setData] = useState([] as T[]);
   const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(50);
+  const [perPage, setPerPage] = useState(250);
 
   const handleRowSelected = useCallback((state: { selectedRows: T[] }) => {
     setSelectedRows(state.selectedRows);
@@ -57,7 +57,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
   };
 
   const handlePerRowsChange = async (newPerPage: number, page: number) => {
-    setPerPage(50);
+    setPerPage(newPerPage);
     fetchData(page, newPerPage, filterText);
   };
 
@@ -77,9 +77,10 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
             data={data}
             pagination
             paginationServer
-            paginationPerPage={50}
-            paginationRowsPerPageOptions={[10, 50, 100, 250]}
+            paginationPerPage={250}
+            paginationRowsPerPageOptions={[10, 50, 100, 250, 500]}
             paginationTotalRows={totalRows}
+            defaultSortField={defaultSortField}
             subHeader={!!filterField}
             subHeaderComponent={filterField && subHeaderComponentMemo}
             selectableRows
@@ -101,6 +102,7 @@ interface TableProps<T extends Row> {
   editRow?: (row: T) => any,
   createRow: (row: any, links: any) => T,
   filterField?: string,
+  defaultSortField?: string,
   api: AxiosInstance
 }
 

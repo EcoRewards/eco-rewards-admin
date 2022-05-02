@@ -42,6 +42,12 @@ export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
         <span>Members</span></NavLink>
     </li>
 
+    <li className="nav-item">
+      <NavLink activeClassName="active" className="nav-link" to="/locations">
+        <i className="fas fa-fw fa-user"></i>
+        <span>Locations</span></NavLink>
+    </li>
+
     <hr className="sidebar-divider"/>
 
     <div className="sidebar-heading">
