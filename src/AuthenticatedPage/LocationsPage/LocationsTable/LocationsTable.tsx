@@ -43,6 +43,10 @@ export const LocationsTable = ({ api }: LocationsTableProps) => {
       name: "Notes",
       selector: "notes",
       sortable: true
+    }, {
+      name: "URL",
+      selector: "url",
+      sortable: true
     }
   ];
 
@@ -99,13 +103,13 @@ export const LocationsTable = ({ api }: LocationsTableProps) => {
                 <tbody>
                 <tr>
                   <td>
-                    Default Distance
+                    Name
                   </td>
                   <td><input type="text" name="name" value={name} onChange={e => setName(e.target.value)} className="col-12"/></td>
                 </tr>
                 <tr>
                   <td>
-                    Rewards
+                    Notes
                   </td>
                   <td><input type="text" name="notes" value={notes} onChange={e => setNotes(e.target.value)} className="col-12"/></td>
                 </tr>
