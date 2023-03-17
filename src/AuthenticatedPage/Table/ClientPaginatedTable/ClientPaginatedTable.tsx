@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import DataTable, { IDataTableColumn } from "react-data-table-component";
+import DataTable, { TableColumn } from "react-data-table-component";
 import styled from "styled-components";
 import "./ClientPaginatedTable.css";
 import { AxiosInstance } from "axios";
@@ -50,6 +50,7 @@ export const ClientPaginatedTable = <T extends Row>({ rows, columns, removeRows,
       <div className="card-body">
         <div className="table-responsive">
           <DataTable
+            actions
             columns={columns}
             data={filteredItems}
             pagination
@@ -71,7 +72,7 @@ export const ClientPaginatedTable = <T extends Row>({ rows, columns, removeRows,
 
 interface TableProps<T extends Row> {
   rows: T[],
-  columns: IDataTableColumn<T>[],
+  columns: TableColumn<T>[],
   removeRows?: (rows: Row[]) => any,
   editRow?: (row: T) => any,
   api: AxiosInstance

@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
   const protectedRoutes = <>
     <li className="nav-item">
-      <NavLink exact={true} activeClassName="active" className="nav-link" to="/">
+      <NavLink end={true} className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/">
         <i className="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></NavLink>
     </li>
@@ -17,33 +17,33 @@ export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
     </div>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/schemes">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/schemes">
         <i className="fas fa-fw fa-city"></i>
         <span>Schemes</span></NavLink>
     </li>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/organisations">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/organisations">
         <i className="fas fa-fw fa-school"></i>
         <span>Organisations</span>
       </NavLink>
     </li>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/groups">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/groups">
         <i className="fas fa-fw fa-users"></i>
         <span>Groups</span>
       </NavLink>
     </li>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/members">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/members">
         <i className="fas fa-fw fa-user"></i>
         <span>Members</span></NavLink>
     </li>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/locations">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/locations">
         <i className="fas fa-fw fa-user"></i>
         <span>Locations</span></NavLink>
     </li>
@@ -55,13 +55,13 @@ export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
     </div>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/journeys">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/journeys">
         <i className="fas fa-fw fa-bus"></i>
         <span>Journeys</span></NavLink>
     </li>
 
     <li className="nav-item">
-      <NavLink activeClassName="active" className="nav-link" to="/devices">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/devices">
         <i className="fas fa-fw fa-pager"></i>
         <span>Device Status Updates</span></NavLink>
     </li>
@@ -79,7 +79,7 @@ export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
       <hr className="sidebar-divider my-0"/>
       { isAdmin && protectedRoutes }
       <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/device-overview">
+          <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/device-overview">
           <i className="fas fa-fw fa-list-alt"></i>
           <span>Device Overview</span></NavLink>
       </li>

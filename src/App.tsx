@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { LoginPage } from "./LoginPage/LoginPage";
 import { AuthenticatedPage } from './AuthenticatedPage/AuthenticatedPage';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
@@ -17,17 +17,15 @@ export const App = () => {
 
   return (
     <HashRouter>
-      <Switch>
-        <Route path="/login">
-          <LoginPage auth={auth}/>
-        </Route>
-        <Route path="/register">
-          <RegistrationPage api={api}/>
-        </Route>
-        <PrivateRoute auth={auth} path="/">
-          <AuthenticatedPage auth={auth}/>
-        </PrivateRoute>
-      </Switch>
+      <Routes>
+        <Route path="/login" element={<LoginPage auth={auth}/>}/>
+        <Route path="/register" element={<RegistrationPage api={api}/>}/>
+        <Route path="*" element={
+          <PrivateRoute auth={auth} path="/">
+            <AuthenticatedPage auth={auth}/>
+          </PrivateRoute>
+        }/>
+      </Routes>
     </HashRouter>
   );
 };

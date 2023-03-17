@@ -15,17 +15,17 @@ export const DeviceStatusTable = ({ api }: DeviceStatusTableProps) => {
 
   const columns = [{
     name: "Device ID",
-    selector: "numeric_id",
+    selector: (row: any) => row.numeric_id,
     sortable: true,
     width: "110px"
   },{
     name: "Received",
-    selector: "received",
+    selector: (row: any) => row.received,
     sortable: true,
     width: "180px"
   },{
     name: "Status",
-    selector: "status",
+    selector: (row: any) => row.status,
     sortable: false
   }];
 

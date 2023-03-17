@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from './DashboardPage/DashboardPage';
 import { SideNavigation } from "./SideNavigation/SideNavigation";
 import { TopBar } from "./TopBar/TopBar";
@@ -10,46 +10,26 @@ import { OrganisationsPage } from "./OrganisationsPage/OrganisationsPage";
 import { GroupsPage } from './GroupsPage/GroupsPage';
 import { MembersPage } from "./MembersPage/MembersPage";
 import { JourneysPage } from "./JourneysPage/JourneysPage";
-import {DeviceStatusPage} from "./DeviceStatusPage/DeviceStatusPage";
+import { DeviceStatusPage } from "./DeviceStatusPage/DeviceStatusPage";
 import { DeviceOverviewPage } from "./DeviceOverviewPage/DeviceOverviewPage";
 import { LocationsPage } from "./LocationsPage/LocationsPage";
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
-  const protectedRoutes = <Switch>
-    <Route path="/schemes">
-      <SchemesPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/organisations">
-      <OrganisationsPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/groups">
-      <GroupsPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/members">
-      <MembersPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/journeys">
-      <JourneysPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/devices">
-      <DeviceStatusPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/device-overview">
-      <DeviceOverviewPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/locations">
-      <LocationsPage api={auth.getAuthenticatedApi()} />
-    </Route>
-    <Route path="/">
-      <DashboardPage api={auth.getAuthenticatedApi()} />
-    </Route>
-  </Switch>;
+  const protectedRoutes = <Routes>
+    <Route path="/schemes" element={<SchemesPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/organisations" element={<OrganisationsPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/groups" element={<GroupsPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/members" element={<MembersPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/journeys" element={<JourneysPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/devices" element={<DeviceStatusPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/device-overview" element={<DeviceOverviewPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/locations" element={<LocationsPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/" element={<DashboardPage api={auth.getAuthenticatedApi()} />}/>
+  </Routes>;
 
-  const nonAdminDashboard = <>
-    <Route path="/">
-      <DeviceOverviewPage api={auth.getAuthenticatedApi()} />
-    </Route>
-  </>;
+  const nonAdminDashboard = <Routes>
+    <Route path="/" element={<DeviceOverviewPage api={auth.getAuthenticatedApi()} />}/>
+  </Routes>;
 
   return (
     <div id="wrapper">
@@ -57,11 +37,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <TopBar auth={auth}/>
-          <HashRouter>
-            <Switch>
-              { auth.isAdmin ? protectedRoutes : nonAdminDashboard }
-            </Switch>
-          </HashRouter>
+          { auth.isAdmin ? protectedRoutes : nonAdminDashboard }
         </div>
         <Footer/>
       </div>

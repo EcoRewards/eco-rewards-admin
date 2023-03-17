@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import DataTable, { IDataTableColumn } from "react-data-table-component";
+import DataTable, { TableColumn } from "react-data-table-component";
 import styled from "styled-components";
 import "./ServerPaginatedTable.css";
 import { AxiosInstance } from "axios";
@@ -73,6 +73,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
       <div className="card-body">
         <div className="table-responsive">
           <DataTable
+            actions
             columns={columns}
             data={data}
             pagination
@@ -80,7 +81,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
             paginationPerPage={250}
             paginationRowsPerPageOptions={[10, 50, 100, 250, 500]}
             paginationTotalRows={totalRows}
-            defaultSortField={defaultSortField}
+            defaultSortFieldId={defaultSortField}
             subHeader={!!filterField}
             subHeaderComponent={filterField && subHeaderComponentMemo}
             selectableRows
@@ -98,7 +99,7 @@ export const ServerPaginatedTable = <T extends Row>({ uri, columns, createRow, e
 
 interface TableProps<T extends Row> {
   uri: string,
-  columns: IDataTableColumn<T>[],
+  columns: TableColumn<T>[],
   editRow?: (row: T) => any,
   createRow: (row: any, links: any) => T,
   filterField?: string,

@@ -9,16 +9,16 @@ export const SchemesTable = ({ api, schemes, removeSchemes }: SchemesTableProps)
 
   const columns = [{
     name: "ID",
-    selector: "numeric_id",
+    selector: (row: any) => row.numeric_id,
     sortable: true,
     width: "100px"
   },{
     name: "Name",
-    selector: "name",
+    selector: (row: any) => row.name,
     sortable: true
   },{
     name: "VAC Client ID",
-    selector: "vacClientId",
+    selector: (row: any) => row.vacClientId,
     sortable: true
   }];
 

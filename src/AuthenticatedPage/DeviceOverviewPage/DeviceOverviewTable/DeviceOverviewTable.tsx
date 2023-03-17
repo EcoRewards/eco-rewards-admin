@@ -14,18 +14,18 @@ export const DeviceOverviewTable = ({ api }: DeviceStatusTableProps) => {
 
   const columns = [{
     name: "Device ID",
-    selector: "numeric_id",
+    selector: (row: any) => row.numeric_id,
     sortable: true,
     width: "110px"
   },{
     name: "Last Update",
-    selector: "received",
+    selector: (row: any) => row.received,
     sortable: true,
     width: "180px",
     cell: (row: any) => new Date(row.received + "+0000").toLocaleString()
   },{
     name: "Status",
-    selector: "status",
+    selector: (row: any) => row.status,
     sortable: false
   }];
 

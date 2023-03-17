@@ -2,13 +2,13 @@ import React, { FormEvent, useState } from "react";
 import "./LoginPage.css";
 import { Authentication } from "../Authentication";
 import {
-  useHistory,
+  useNavigate,
   useLocation
 } from "react-router-dom";
 
 export const LoginPage = ({ auth }: LoginPageProps) => {
-  const history = useHistory();
-  const location = useLocation<any>();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
   const [loginError, setLoginError] = useState("");
   const [username, setUsername] = useState("");
@@ -29,7 +29,7 @@ export const LoginPage = ({ auth }: LoginPageProps) => {
   };
 
   if (auth.isAuthenticated) {
-    history.replace(from);
+    navigate(from);
   }
 
   return (

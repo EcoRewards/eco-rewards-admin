@@ -43,49 +43,49 @@ export const MembersTable = ({ api, groups }: MembersTableProps) => {
   const columns = [
     {
       name: "ID",
-      selector: "numeric_id",
+      selector: (row: any) => row.numeric_id,
       sortable: true,
       width: "175px"
     },{
       name: "Scheme",
-      selector: "scheme",
+      selector: (row: any) => row.scheme,
       sortable: true
     },{
       name: "Organisation",
-      selector: "organisation",
+      selector: (row: any) => row.organisation,
       sortable: true
     },{
       name: "Group",
-      selector: "name",
+      selector: (row: any) => row.name,
       sortable: true
     },{
       name: "Default Mode",
-      selector: "defaultTransportMode",
+      selector: (row: any) => row.defaultTransportMode,
       sortable: false,
       width: "140px"
     },{
       name: "Previous Mode",
-      selector: "previousTransportMode",
+      selector: (row: any) => row.previousTransportMode,
       sortable: false,
       width: "140px"
     },{
       name: "Default Distance",
-      selector: "defaultDistance",
+      selector: (row: any) => row.defaultDistance,
       sortable: true,
       width: "130px"
     },{
       name: "Rewards",
-      selector: "rewards",
+      selector: (row: any) => row.rewards,
       sortable: true,
       width: "90px"
     },{
       name: "Carbon Saving",
-      selector: "carbonSaving",
+      selector: (row: any) => row.carbonSaving,
       sortable: true,
       width: "130px"
     },{
       name: "Total Miles",
-      selector: "totalMiles",
+      selector: (row: any) => row.totalMiles,
       sortable: true,
       width: "130px"
     }
@@ -104,6 +104,7 @@ export const MembersTable = ({ api, groups }: MembersTableProps) => {
     window.location.reload();
   };
   const onEdit = (m: MemberRow) => {
+    console.log("ON EDIT");
     setEditMember(m);
     setDefaultDistance(m.defaultDistance.replace(" miles", ""));
     setDefaultTransportMode(m.defaultTransportMode);

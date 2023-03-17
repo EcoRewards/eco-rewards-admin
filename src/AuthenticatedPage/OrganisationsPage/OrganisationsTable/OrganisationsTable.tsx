@@ -1,6 +1,6 @@
 import React from "react";
 import { toOrganisationId } from "eco-rewards-hub/dist/src/organisation/Organisation";
-import { Row, ClientPaginatedTable } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
+import { ClientPaginatedTable, Row } from "../../Table/ClientPaginatedTable/ClientPaginatedTable";
 import { AxiosInstance } from "axios";
 import { OrganisationJsonView } from "eco-rewards-hub";
 
@@ -14,16 +14,16 @@ export const OrganisationsTable = ({ api, organisations, links, removeOrganisati
 
   const columns = [{
     name: "ID",
-    selector: "numeric_id",
+    selector: (row: any) => row.numeric_id,
     sortable: true,
     width: "100px"
   },{
     name: "Name",
-    selector: "name",
+    selector: (row: any) => row.name,
     sortable: true
   },{
     name: "Scheme",
-    selector: "scheme",
+    selector: (row: any) => row.scheme,
     sortable: true
   }];
 

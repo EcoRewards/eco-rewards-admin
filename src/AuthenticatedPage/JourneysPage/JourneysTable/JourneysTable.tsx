@@ -20,62 +20,62 @@ export const JourneysTable = ({ api }: JourneysTableProps) => {
 
   const columns = [{
     name: "Member ID",
-    selector: "numeric_id",
+    selector: (row: any) => row.numeric_id,
     sortable: true,
     width: "180px"
   },{
     name: "Source",
-    selector: "source",
+    selector: (row: any) => row.source,
     sortable: true,
     width: "110px"
   },{
     name: "Device",
-    selector: "deviceId",
+    selector: (row: any) => row.deviceId,
     sortable: true,
     width: "110px"
   },{
     name: "Latitude",
-    selector: "latitude",
+    selector: (row: any) => row.latitude,
     sortable: false,
     width: "100px"
   },{
     name: "Longitude",
-    selector: "longitude",
+    selector: (row: any) => row.longitude,
     sortable: false,
     width: "100px"
   },{
     name: "Uploaded",
-    selector: "uploaded",
+    selector: (row: any) => row.uploaded,
     sortable: true,
     width: "170px"
   },{
     name: "Processed",
-    selector: "processed",
+    selector: (row: any) => row.processed,
     sortable: true,
     width: "170px"
   },{
     name: "Travel Date",
-    selector: "travelDate",
+    selector: (row: any) => row.travelDate,
     sortable: true,
     width: "170px"
   },{
     name: "Distance",
-    selector: "distance",
+    selector: (row: any) => row.distance,
     sortable: true,
     width: "90px"
   },{
     name: "Mode",
-    selector: "mode",
+    selector: (row: any) => row.mode,
     sortable: true,
     width: "90px"
   },{
     name: "Rewards Earned",
-    selector: "rewardsEarned",
+    selector: (row: any) => row.rewardsEarned,
     sortable: true,
     width: "80px"
   },{
     name: "Carbon Saving",
-    selector: "carbonSaving",
+    selector: (row: any) => row.carbonSaving,
     sortable: true,
     width: "80px"
   }];

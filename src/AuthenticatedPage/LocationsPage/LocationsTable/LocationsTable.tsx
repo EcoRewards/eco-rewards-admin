@@ -32,20 +32,20 @@ export const LocationsTable = ({ api }: LocationsTableProps) => {
   const columns = [
     {
       name: "ID",
-      selector: "numeric_id",
+      selector: (row: any) => row.numeric_id,
       sortable: true,
       width: "175px"
     },{
       name: "Name",
-      selector: "name",
+      selector: (row: any) => row.name,
       sortable: true
     },{
       name: "Notes",
-      selector: "notes",
+      selector: (row: any) => row.notes,
       sortable: true
     }, {
       name: "URL",
-      selector: "url",
+      selector: (row: any) => row.url,
       sortable: true
     }
   ];
