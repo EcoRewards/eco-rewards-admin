@@ -44,7 +44,7 @@ export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
 
     <li className="nav-item">
       <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/locations">
-        <i className="fas fa-fw fa-user"></i>
+        <i className="fas fa-fw fa-location-arrow"></i>
         <span>Locations</span></NavLink>
     </li>
 
@@ -64,6 +64,12 @@ export const SideNavigation = ({ isAdmin }: { isAdmin: boolean }) => {
       <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/devices">
         <i className="fas fa-fw fa-pager"></i>
         <span>Device Status Updates</span></NavLink>
+    </li>
+
+    <li className="nav-item">
+      <NavLink className={({ isActive }) => "nav-link" + (isActive ? " active": "")} to="/trophies">
+        <i className="fas fa-fw fa-trophy"></i>
+        <span>Trophies</span></NavLink>
     </li>
   </>
 

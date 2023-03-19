@@ -13,6 +13,7 @@ import { JourneysPage } from "./JourneysPage/JourneysPage";
 import { DeviceStatusPage } from "./DeviceStatusPage/DeviceStatusPage";
 import { DeviceOverviewPage } from "./DeviceOverviewPage/DeviceOverviewPage";
 import { LocationsPage } from "./LocationsPage/LocationsPage";
+import { TrophiesPage } from "./TrophiesPage/TrophiesPage";
 
 export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
   const protectedRoutes = <Routes>
@@ -24,6 +25,7 @@ export const AuthenticatedPage = ({ auth }: AuthenticatedPageProps) => {
     <Route path="/devices" element={<DeviceStatusPage api={auth.getAuthenticatedApi()} />}/>
     <Route path="/device-overview" element={<DeviceOverviewPage api={auth.getAuthenticatedApi()} />}/>
     <Route path="/locations" element={<LocationsPage api={auth.getAuthenticatedApi()} />}/>
+    <Route path="/trophies" element={<TrophiesPage api={auth.getAuthenticatedApi()} />}/>
     <Route path="/" element={<DashboardPage api={auth.getAuthenticatedApi()} />}/>
   </Routes>;
 
