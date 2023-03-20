@@ -20,7 +20,7 @@ export const TrophiesTable = ({ api }: TrophiesTableProps) => {
     name: "Member ID",
     selector: (row: any) => row.memberId,
     sortable: true,
-    width: "110px"
+    width: "180px"
   },{
     name: "Trophy",
     selector: (row: any) => row.name,
