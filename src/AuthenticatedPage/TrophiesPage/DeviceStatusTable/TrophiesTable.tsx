@@ -4,9 +4,8 @@ import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPag
 import { TrophyJsonView } from "eco-rewards-hub/dist/src/trophy/Trophy";
 
 export const TrophiesTable = ({ api }: TrophiesTableProps) => {
-  let i = 0;
-  const createRow = (o: TrophyJsonView, links: Record<string, any>) => ({
-    id: i++ + "",
+  const createRow = (o: TrophyJsonView) => ({
+    id: o.id,
     memberId: o.member!.substr(8),
     name: o.name,
     memberGroup: o.memberGroup.substring(7),
