@@ -78,6 +78,11 @@ export const JourneysTable = ({ api }: JourneysTableProps) => {
     selector: (row: any) => row.carbonSaving,
     sortable: true,
     width: "80px"
+  },{
+    name: "Type",
+    selector: (row: any) => row.type,
+    sortable: true,
+    width: "80px"
   }];
 
   return (
