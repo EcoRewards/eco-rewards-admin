@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from "react";
 import { AxiosInstance } from "axios";
 import Modal from "react-modal";
 import { ServerPaginatedTable } from "../../Table/ServerPaginatedTable/ServerPaginatedTable";
-import { LocationJsonView } from "../CreateLocationForm/CreateLocationForm";
+import { LocationJsonView } from "eco-rewards-hub";
 
 Modal.setAppElement('#root');
 
@@ -24,28 +24,32 @@ const customStyles = {
 };
 
 export const LocationsTable = ({ api }: LocationsTableProps) => {
-  const createRow = (m: LocationJsonView): LocationRow => ({
+  const createRow = (m: LocationJsonView & { id: string}): LocationRow => ({
     ...m,
-    numeric_id: m.id!.substring(m.id.lastIndexOf("/") + 1),
+    numeric_id: m.id.substring(m.id.lastIndexOf("/") + 1),
   });
 
   const columns = [
     {
       name: "ID",
-      selector: (row: any) => row.numeric_id,
+      selector: (row: LocationRow) => row.numeric_id,
       sortable: true,
       width: "175px"
     },{
       name: "Name",
-      selector: (row: any) => row.name,
+      selector: (row: LocationRow) => row.name,
       sortable: true
     },{
       name: "Notes",
-      selector: (row: any) => row.notes,
+      selector: (row: LocationRow) => row.notes,
       sortable: true
-    }, {
+    },{
       name: "URL",
-      selector: (row: any) => row.url,
+      selector: (row: LocationRow) => row.url,
+      sortable: true
+    },{
+      name: "Journey Type",
+      selector: (row: LocationRow) => row.defaultJourneyType,
       sortable: true
     }
   ];
@@ -138,5 +142,6 @@ interface LocationsTableProps {
 }
 
 interface LocationRow extends LocationJsonView {
+  id: string,
   numeric_id: string
 }

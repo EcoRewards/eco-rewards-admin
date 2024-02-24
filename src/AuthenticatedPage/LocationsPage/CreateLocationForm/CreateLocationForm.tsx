@@ -1,19 +1,21 @@
 import React, { FormEvent, useState } from "react";
 import { AxiosInstance } from "axios";
-import { HttpResponse } from "eco-rewards-hub";
+import { HttpResponse, LocationJsonView } from "eco-rewards-hub";
 
 export const CreateLocationForm = ({ api, addLocations }: CreateLocationFormProps) => {
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
+  const [defaultJourneyType, setDefaultJourneyType] = useState("");
   const [message, setMessage] = useState("");
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/locations", { name, notes });
+      const response = await api.post("/location", { name, notes, defaultJourneyType });
 
       setName("");
+      setDefaultJourneyType("");
       setMessage("Location created.");
       setNotes("");
       addLocations(response.data);
@@ -38,12 +40,19 @@ export const CreateLocationForm = ({ api, addLocations }: CreateLocationFormProp
             <tr>
               <th>Name</th>
               <th>Notes</th>
+              <th>Default Journey Type</th>
             </tr>
             </thead>
             <tbody>
             <tr>
               <td><input type="text" name="name" value={name} onChange={e => setName(e.target.value)} className="col-12"/></td>
               <td><input type="text" name="notes" value={notes} onChange={e => setNotes(e.target.value)} className="col-12"/></td>
+              <td>
+                <select name="defaultJourneyType" value={defaultJourneyType} onChange={e => setDefaultJourneyType(e.target.value)} className="col-12">
+                  <option value="journey">Journey</option>
+                  <option value="leisure">Leisure</option>
+                </select>
+              </td>
             </tr>
             </tbody>
           </table>
@@ -61,9 +70,3 @@ interface CreateLocationFormProps {
   addLocations: (response: HttpResponse<LocationJsonView>) => any
 }
 
-export interface LocationJsonView {
-  id: string,
-  name: string,
-  notes: string,
-  url: string
-}
