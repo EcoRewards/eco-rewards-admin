@@ -58,6 +58,7 @@ export const LocationsTable = ({ api }: LocationsTableProps) => {
   const [message, setMessage] = useState<string>();
   const [name, setName] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
+  const [defaultJourneyType, setDefaultJourneyType] = useState<string>("journey");
 
   const closeModal = () => {
     window.location.reload();
@@ -77,7 +78,7 @@ export const LocationsTable = ({ api }: LocationsTableProps) => {
     }
 
     try {
-      const newProps = { name, notes,setNotes };
+      const newProps = { name, notes, defaultJourneyType };
       await api.put(editLocation.id, newProps);
 
       window.location.reload();
@@ -117,11 +118,24 @@ export const LocationsTable = ({ api }: LocationsTableProps) => {
                   </td>
                   <td><input type="text" name="notes" value={notes} onChange={e => setNotes(e.target.value)} className="col-12"/></td>
                 </tr>
+                <tr>
+                  <td>
+                    Default Journey Type
+                  </td>
+                  <td>
+                    <select name="defaultJourneyType" value={defaultJourneyType}
+                            onChange={e => setDefaultJourneyType(e.target.value)} className="col-12">
+                      <option value="journey">Journey</option>
+                      <option value="leisure">Leisure</option>
+                    </select>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <div className="container row pl-3 pr-0">
                 <div className="col-6 p-0">
-                  <input type="button" value="Cancel" style={{ width: "100px" }} className="btn btn-light btn-user btn-block" onClick={closeModal}/>
+                  <input type="button" value="Cancel" style={{width: "100px"}}
+                         className="btn btn-light btn-user btn-block" onClick={closeModal}/>
                 </div>
                 <div className="col-6 p-0">
                   <button style={{ width: "100px", float: 'right' }} type="submit" className="btn btn-primary btn-user btn-block">
