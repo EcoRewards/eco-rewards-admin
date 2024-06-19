@@ -14,6 +14,7 @@ export const TransportModeList = ({ defaultTransportMode, setDefaultTransportMod
     "Train",
     "Cycling",
     "Walk",
+    "Wheeling",
     "Work from home"
   ];
 
